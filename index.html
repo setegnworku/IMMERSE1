@@ -1,725 +1,503 @@
-import React, { useState, useEffect } from 'react';
-import { Leaf, Droplets, BarChart3, Globe2, Target, TrendingUp, Users, Sprout, FlaskConical, Database, Layers, Microscope, Award, CheckCircle2, ArrowRight, Zap, Recycle, Star, DollarSign, PieChart, Shield, Briefcase, BookOpen, Network } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMMeRSE - Integrated Methane Mitigation Strategies for Ruminant Sustainability in East Africa</title>
+    <meta name="description" content="IMMeRSE: Transforming African livestock systems while fighting climate change. 33% proven methane reduction across 150M+ ruminants in 5 East African countries.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- React and ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel Standalone for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Lucide React Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
 
-export default function IMMeRSEDonorPage() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [activeTab, setActiveTab] = useState(0);
-  const [scrollY, setScrollY] = useState(0);
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        // Lucide icon components
+        const Leaf = () => <i data-lucide="leaf"></i>;
+        const Droplets = () => <i data-lucide="droplets"></i>;
+        const BarChart3 = () => <i data-lucide="bar-chart-3"></i>;
+        const Globe2 = () => <i data-lucide="globe-2"></i>;
+        const Target = () => <i data-lucide="target"></i>;
+        const TrendingUp = () => <i data-lucide="trending-up"></i>;
+        const Users = () => <i data-lucide="users"></i>;
+        const Sprout = () => <i data-lucide="sprout"></i>;
+        const FlaskConical = () => <i data-lucide="flask-conical"></i>;
+        const Database = () => <i data-lucide="database"></i>;
+        const Layers = () => <i data-lucide="layers"></i>;
+        const Microscope = () => <i data-lucide="microscope"></i>;
+        const Award = () => <i data-lucide="award"></i>;
+        const CheckCircle2 = () => <i data-lucide="check-circle-2"></i>;
+        const ArrowRight = () => <i data-lucide="arrow-right"></i>;
+        const Zap = () => <i data-lucide="zap"></i>;
+        const Recycle = () => <i data-lucide="recycle"></i>;
+        const Star = () => <i data-lucide="star"></i>;
+        const DollarSign = () => <i data-lucide="dollar-sign"></i>;
+        const PieChart = () => <i data-lucide="pie-chart"></i>;
+        const Shield = () => <i data-lucide="shield"></i>;
+        const Briefcase = () => <i data-lucide="briefcase"></i>;
+        const BookOpen = () => <i data-lucide="book-open"></i>;
+        const Network = () => <i data-lucide="network"></i>;
 
-  useEffect(() => {
-    setIsVisible(true);
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const impactMetrics = [
-    { value: "150M+", label: "East African Ruminants", icon: <Users className="w-8 h-8" />, color: "emerald" },
-    { value: "5", label: "Countries", icon: <Globe2 className="w-8 h-8" />, color: "teal" },
-    { value: "33%", label: "CH₄ Reduction (Proven)", icon: <TrendingUp className="w-8 h-8" />, color: "blue" },
-    { value: "30%", label: "Contribution to Global Warming", icon: <BarChart3 className="w-8 h-8" />, color: "indigo" }
-  ];
-
-  const innovations = [
-    {
-      icon: <Sprout className="w-10 h-10" />,
-      title: "KALPRO™ Probiotic",
-      subtitle: "Validated Field Performance",
-      stats: ["33% CH₄ reduction", "15.7% gas production ↑", "Milk yield increase", "Weight gain boost"],
-      highlight: "Proven in 18-animal field trials (2021-2024)",
-      color: "emerald"
-    },
-    {
-      icon: <Droplets className="w-10 h-10" />,
-      title: "Seaweed Portfolio",
-      subtitle: "Western Indian Ocean Biodiversity",
-      stats: ["386+ species cataloged", "214 Rhodophyta (red algae)", "Up to 15% crude fat", "Bromoform-rich compounds"],
-      highlight: "Systematic screening across Kenya, Tanzania, Mozambique",
-      color: "teal"
-    },
-    {
-      icon: <Leaf className="w-10 h-10" />,
-      title: "Low-Methane TMRs",
-      subtitle: "Indigenous & Optimized",
-      stats: ["Tannin-rich legumes", "Saponin compounds", "Local oilseed cakes", "Nutrient-optimized"],
-      highlight: "Culturally appropriate, cost-effective solutions",
-      color: "blue"
-    },
-    {
-      icon: <FlaskConical className="w-10 h-10" />,
-      title: "Rapid Diagnostic Tool",
-      subtitle: "Field-Deployable Formate Assay",
-      stats: ["Colorimetric detection", "Lab & strip formats", "Real-time screening", "Low-cost deployment"],
-      highlight: "Addresses Roadmap call for affordable tools",
-      color: "indigo"
-    },
-    {
-      icon: <Recycle className="w-10 h-10" />,
-      title: "Circular System",
-      subtitle: "Manure-to-Biofertilizer",
-      stats: ["80% DAP replacement", "CH₄/N₂O reduction", "Soil carbon sequestration", "Food security boost"],
-      highlight: "Triple climate benefit + farmer income",
-      color: "purple"
-    },
-    {
-      icon: <Database className="w-10 h-10" />,
-      title: "AI/ML Platform",
-      subtitle: "Predictive Analytics",
-      stats: ["Machine learning models", "Microbiome integration", "MRV-ready outputs", "Decision support tools"],
-      highlight: "Carbon market readiness built-in",
-      color: "pink"
-    }
-  ];
-
-  const leadPIs = [
-    {
-      name: "Dr. Chernet Woju",
-      role: "Lead PI",
-      affiliation: "ILRI-Beca-AABCF (Kenya)",
-      country: "Ethiopia & New Zealand",
-      expertise: "In vitro fermentation, enteric methane measurement, anti-methanogenic feed additives testing, field animal trials"
-    },
-    {
-      name: "Dr. Willis Adero",
-      role: "Lead PI",
-      affiliation: "ILRI-Beca-AABCF & KALRO (Kenya)",
-      country: "Kenya",
-      expertise: "Probiotic development, KALPRO™ innovation, field animal trials"
-    },
-    {
-      name: "Daniel Kapsandui",
-      role: "Lead PI",
-      affiliation: "ILRI-Beca-AABCF & PhD Candidate",
-      country: "Kenya",
-      expertise: "Agronomic field trials, GHG emissions, carbon sequestration, soil fertility management"
-    }
-  ];
-
-  const supervisors = [
-    { name: "Dr. Claudia Arndt", role: "Enteric Methane Measurement & Mitigation", institution: "ILRI Mazingira Centre" },
-    { name: "Dr. Edward Garcia", role: "On-station & on-farm GHG measurement", institution: "ILRI Mazingira Centre" },
-    { name: "Dr. Nasser Yao", role: "Capacity Building & Exchange Programs", institution: "ILRI Beca-Kenya" },
-    { name: "Dr. Setegn Worku", role: "Data, AI, Machine Learning", institution: "ILRI-Kenya" }
-  ];
-
-  const regionalExperts = [
-    { name: "Dr. Chris Jones", role: "Low Methane Forages", country: "Kenya", institution: "ILRI" },
-    { name: "Dr. Ben Lukuyu", role: "Forages & Seaweeds", country: "Kenya", institution: "ILRI" },
-    { name: "Dr. Bayissa Hatew", role: "Animal Nutrition & In Vitro Testing", country: "Ethiopia", institution: "ILRI" },
-    { name: "Dr. Ermias Habte", role: "Forage Specialist", country: "Ethiopia", institution: "ILRI" },
-    { name: "Gladys Mwaka Holeh", role: "Seaweed Taxonomy & Biochemistry", country: "Kenya", institution: "KMFRI" },
-    { name: "Dr. Margareth Kyewalyanga", role: "Marine Sciences", country: "Tanzania", institution: "UDSM" },
-    { name: "Adey Melesse Yalew", role: "Rumen Microbiologist", country: "Ethiopia", institution: "EIAR" },
-    { name: "Dr. Kabuni Thomas", role: "Ruminant Nutrition & GHG", country: "Tanzania", institution: "TALIRI" },
-    { name: "Dr. Jimmy Semakula", role: "Ruminant Nutrition & GHG", country: "Uganda", institution: "NARO" },
-    { name: "Gilbert Mutoni", role: "National Livestock Methane Specialist", country: "Rwanda", institution: "FAO" },
-    { name: "Dr. David Awolala", role: "Climate Policy & Technical Services", country: "Africa", institution: "AGNES" }
-  ];
-
-  const valuePropositions = [
-    {
-      icon: <DollarSign className="w-12 h-12" />,
-      title: "Carbon Market Ready",
-      description: "MRV frameworks built into methodology from day one. Generate verified emission reductions suitable for carbon credits.",
-      roi: "Direct pathway to climate finance",
-      color: "emerald"
-    },
-    {
-      icon: <TrendingUp className="w-12 h-12" />,
-      title: "Proven Results",
-      description: "33% methane reduction and productivity gains already demonstrated in field trials. Not starting from zero.",
-      roi: "Lower risk, faster deployment",
-      color: "teal"
-    },
-    {
-      icon: <Network className="w-12 h-12" />,
-      title: "Regional Scale",
-      description: "Multi-country platform spanning 5 nations creates continental blueprint for replication across all of Africa.",
-      roi: "Exponential impact potential",
-      color: "blue"
-    },
-    {
-      icon: <Shield className="w-12 h-12" />,
-      title: "World-Class Team",
-      description: "ILRI, KALRO, KMFRI, UDSM, EIAR, TALIRI, NARO, FAO, and AGNES. Unprecedented institutional collaboration.",
-      roi: "Execution certainty",
-      color: "indigo"
-    }
-  ];
-
-  const milestones = [
-    { year: "Year 1", title: "Foundation & Validation", achievements: ["High-throughput screening (Tier A & B)", "Formate assay development", "KALPRO™ revalidation at ILRI", "Seaweed portfolio screening", "Microbiome baseline"] },
-    { year: "Year 2", title: "Scale & Integration", achievements: ["On-station trials (Tier C)", "AI/ML model development", "Multi-farm validation begins (Tier D)", "Manure-to-biofertilizer pilots", "Regional capacity building"] },
-    { year: "Year 3", title: "Impact & Deployment", achievements: ["Full on-farm validation across 5 countries", "MRV framework finalization", "Carbon credit protocols", "Policy briefs & scale-up plans", "Continental expansion roadmap"] }
-  ];
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50/20 to-blue-50/20">
-      {/* Hero Section - Investment Opportunity */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-emerald-900 to-teal-900 min-h-screen flex items-center">
-        {/* Animated background */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-400 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-400 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-teal-400 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-        </div>
-
-        {/* Floating particles */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(30)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-2 h-2 bg-emerald-300/30 rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animation: `float ${5 + Math.random() * 10}s ease-in-out infinite`,
-                animationDelay: `${Math.random() * 5}s`
-              }}
-            />
-          ))}
-        </div>
-
-        <style>{`
-          @keyframes float {
-            0%, 100% { transform: translateY(0px) translateX(0px); }
-            50% { transform: translateY(-20px) translateX(10px); }
-          }
-        `}</style>
-
-        <div className="relative max-w-7xl mx-auto px-6 py-20 z-10">
-          <div className="text-center mb-16">
-            {/* Funding Badge */}
-            <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-400/30 to-yellow-400/30 backdrop-blur-xl border-2 border-amber-400/50 rounded-full mb-8 shadow-2xl">
-              <Award className="w-7 h-7 text-amber-300" />
-              <span className="text-xl font-bold text-amber-200 uppercase tracking-wider">Funding Proposal: Climate Impact at Scale</span>
-            </div>
-
-            <h1 className="text-8xl md:text-9xl font-bold mb-8 leading-tight">
-              <span className="bg-gradient-to-r from-emerald-300 via-teal-300 to-blue-300 bg-clip-text text-transparent drop-shadow-2xl" style={{ fontFamily: "'Playfair Display', serif" }}>
-                IMMeRSE
-              </span>
-            </h1>
+        function IMMeRSEDonorPage() {
+            const [isVisible, setIsVisible] = useState(false);
             
-            <p className="text-4xl text-white font-light mb-8 max-w-5xl mx-auto leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
-              Transform African Livestock Systems While Fighting Climate Change
-            </p>
+            useEffect(() => {
+                setIsVisible(true);
+                // Initialize Lucide icons
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            }, []);
 
-            <p className="text-2xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed">
-              Integrated Methane Mitigation Strategies for Ruminant Sustainability in East Africa
-            </p>
-            
-            {/* Impact Stats */}
-            <div className="grid md:grid-cols-4 gap-6 mb-16">
-              {impactMetrics.map((metric, index) => (
-                <div key={index} className="bg-white/15 backdrop-blur-xl border-2 border-white/30 rounded-2xl p-6 hover:bg-white/25 hover:scale-105 transition-all duration-300 shadow-2xl">
-                  <div className="flex justify-center mb-4 text-white">
-                    {metric.icon}
-                  </div>
-                  <div className="text-6xl font-bold text-white mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
-                    {metric.value}
-                  </div>
-                  <div className="text-lg text-white/90 font-medium">
-                    {metric.label}
-                  </div>
-                </div>
-              ))}
-            </div>
+            useEffect(() => {
+                // Re-initialize icons after component updates
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            });
 
-            {/* Key Differentiators */}
-            <div className="bg-white/10 backdrop-blur-xl border-2 border-white/30 rounded-3xl p-12 shadow-2xl mb-8">
-              <h2 className="text-4xl font-bold text-white mb-8" style={{ fontFamily: "'Playfair Display', serif" }}>
-                Why IMMeRSE is Your Best Climate Investment
-              </h2>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="text-left">
-                  <div className="flex items-center gap-4 mb-4">
-                    <CheckCircle2 className="w-8 h-8 text-emerald-300 flex-shrink-0" />
-                    <span className="text-2xl text-white font-semibold">Proven Technology (33% CH₄ Reduction)</span>
-                  </div>
-                  <div className="flex items-center gap-4 mb-4">
-                    <CheckCircle2 className="w-8 h-8 text-emerald-300 flex-shrink-0" />
-                    <span className="text-2xl text-white font-semibold">150M+ Ruminants Target Market</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <CheckCircle2 className="w-8 h-8 text-emerald-300 flex-shrink-0" />
-                    <span className="text-2xl text-white font-semibold">MRV-Ready for Carbon Markets</span>
-                  </div>
-                </div>
-                <div className="text-left">
-                  <div className="flex items-center gap-4 mb-4">
-                    <CheckCircle2 className="w-8 h-8 text-emerald-300 flex-shrink-0" />
-                    <span className="text-2xl text-white font-semibold">World-Class Multi-Institutional Team</span>
-                  </div>
-                  <div className="flex items-center gap-4 mb-4">
-                    <CheckCircle2 className="w-8 h-8 text-emerald-300 flex-shrink-0" />
-                    <span className="text-2xl text-white font-semibold">5-Country Platform for Africa-Wide Scale</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <CheckCircle2 className="w-8 h-8 text-emerald-300 flex-shrink-0" />
-                    <span className="text-2xl text-white font-semibold">Triple Impact: Climate + Food + Income</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            const impactMetrics = [
+                { value: "150M+", label: "East African Ruminants", color: "emerald" },
+                { value: "5", label: "Countries", color: "teal" },
+                { value: "33%", label: "CH₄ Reduction (Proven)", color: "blue" },
+                { value: "30%", label: "Contribution to Global Warming", color: "indigo" }
+            ];
 
-            {/* Funding Status */}
-            <div className="bg-gradient-to-r from-amber-500/20 to-yellow-500/20 backdrop-blur-xl border-2 border-amber-400/40 rounded-3xl p-8 shadow-2xl">
-              <div className="flex items-center justify-center gap-4">
-                <DollarSign className="w-10 h-10 text-amber-300" />
-                <p className="text-2xl text-white font-bold">
-                  Seeking Strategic Funding Partners for 3-Year Implementation (2026-2028)
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            const innovations = [
+                {
+                    title: "KALPRO™ Probiotic",
+                    subtitle: "Validated Field Performance",
+                    stats: ["33% CH₄ reduction", "15.7% gas production ↑", "Milk yield increase", "Weight gain boost"],
+                    highlight: "Proven in 18-animal field trials (2021-2024)",
+                    color: "emerald"
+                },
+                {
+                    title: "Seaweed Portfolio",
+                    subtitle: "Western Indian Ocean Biodiversity",
+                    stats: ["386+ species cataloged", "214 Rhodophyta (red algae)", "Up to 15% crude fat", "Bromoform-rich compounds"],
+                    highlight: "Systematic screening across Kenya, Tanzania, Mozambique",
+                    color: "teal"
+                },
+                {
+                    title: "Low-Methane TMRs",
+                    subtitle: "Indigenous & Optimized",
+                    stats: ["Tannin-rich legumes", "Saponin compounds", "Local oilseed cakes", "Nutrient-optimized"],
+                    highlight: "Culturally appropriate, cost-effective solutions",
+                    color: "blue"
+                },
+                {
+                    title: "Rapid Diagnostic Tool",
+                    subtitle: "Field-Deployable Formate Assay",
+                    stats: ["Colorimetric detection", "Lab & strip formats", "Real-time screening", "Low-cost deployment"],
+                    highlight: "Addresses Roadmap call for affordable tools",
+                    color: "indigo"
+                },
+                {
+                    title: "Circular System",
+                    subtitle: "Manure-to-Biofertilizer",
+                    stats: ["80% DAP replacement", "CH₄/N₂O reduction", "Soil carbon sequestration", "Food security boost"],
+                    highlight: "Triple climate benefit + farmer income",
+                    color: "purple"
+                },
+                {
+                    title: "AI/ML Platform",
+                    subtitle: "Predictive Analytics",
+                    stats: ["Machine learning models", "Microbiome integration", "MRV-ready outputs", "Decision support tools"],
+                    highlight: "Carbon market readiness built-in",
+                    color: "pink"
+                }
+            ];
 
-      {/* Value Propositions for Donors */}
-      <div className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center gap-3 px-6 py-3 bg-emerald-100 rounded-full mb-6 shadow-lg">
-              <Briefcase className="w-6 h-6 text-emerald-700" />
-              <span className="text-lg font-bold text-emerald-700 uppercase tracking-wider">Investment Value</span>
-            </div>
-            <h2 className="text-6xl font-bold text-slate-800 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Why Fund IMMeRSE?
-            </h2>
-            <p className="text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
-              Four compelling reasons this is a high-impact, low-risk investment in climate action
-            </p>
-          </div>
+            const valuePropositions = [
+                {
+                    title: "Carbon Market Ready",
+                    description: "MRV frameworks built into methodology from day one. Generate verified emission reductions suitable for carbon credits.",
+                    roi: "Direct pathway to climate finance",
+                    color: "emerald"
+                },
+                {
+                    title: "Proven Results",
+                    description: "33% methane reduction and productivity gains already demonstrated in field trials. Not starting from zero.",
+                    roi: "Lower risk, faster deployment",
+                    color: "teal"
+                },
+                {
+                    title: "Regional Scale",
+                    description: "Multi-country platform spanning 5 nations creates continental blueprint for replication across all of Africa.",
+                    roi: "Exponential impact potential",
+                    color: "blue"
+                },
+                {
+                    title: "World-Class Team",
+                    description: "ILRI, KALRO, KMFRI, UDSM, EIAR, TALIRI, NARO, FAO, and AGNES. Unprecedented institutional collaboration.",
+                    roi: "Execution certainty",
+                    color: "indigo"
+                }
+            ];
 
-          <div className="grid md:grid-cols-2 gap-10">
-            {valuePropositions.map((prop, index) => (
-              <div key={index} className={`bg-gradient-to-br from-${prop.color}-50 to-${prop.color}-100/50 rounded-3xl p-10 border-4 border-${prop.color}-200 shadow-xl hover:shadow-2xl transition-all hover:scale-105 duration-300`}>
-                <div className={`inline-flex p-5 bg-${prop.color}-600 rounded-2xl mb-6 shadow-lg`}>
-                  {React.cloneElement(prop.icon, { className: "text-white" })}
-                </div>
-                <h3 className="text-3xl font-bold text-slate-800 mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
-                  {prop.title}
-                </h3>
-                <p className="text-xl text-slate-700 leading-relaxed mb-6">
-                  {prop.description}
-                </p>
-                <div className={`inline-flex items-center gap-2 px-5 py-3 bg-${prop.color}-600 text-white rounded-full font-bold text-lg shadow-lg`}>
-                  <Star className="w-5 h-5" />
-                  {prop.roi}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+            const milestones = [
+                { 
+                    year: "Year 1", 
+                    title: "Foundation & Validation", 
+                    achievements: ["High-throughput screening (Tier A & B)", "Formate assay development", "KALPRO™ revalidation at ILRI", "Seaweed portfolio screening", "Microbiome baseline"] 
+                },
+                { 
+                    year: "Year 2", 
+                    title: "Scale & Integration", 
+                    achievements: ["On-station trials (Tier C)", "AI/ML model development", "Multi-farm validation begins (Tier D)", "Manure-to-biofertilizer pilots", "Regional capacity building"] 
+                },
+                { 
+                    year: "Year 3", 
+                    title: "Impact & Deployment", 
+                    achievements: ["Full on-farm validation across 5 countries", "MRV framework finalization", "Carbon credit protocols", "Policy briefs & scale-up plans", "Continental expansion roadmap"] 
+                }
+            ];
 
-      {/* Six Revolutionary Innovations */}
-      <div className="bg-gradient-to-br from-slate-50 to-blue-50 py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <h2 className="text-6xl font-bold text-slate-800 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Six Integrated Innovation Streams
-            </h2>
-            <p className="text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
-              Comprehensive, synergistic approaches delivering measurable climate and productivity benefits
-            </p>
-          </div>
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50/20 to-blue-50/20">
+                    {/* Hero Section */}
+                    <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-emerald-900 to-teal-900 min-h-screen flex items-center">
+                        <div className="absolute inset-0 opacity-30">
+                            <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-400 rounded-full blur-3xl animate-pulse"></div>
+                            <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-400 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+                        </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {innovations.map((innovation, index) => (
-              <div key={index} className="bg-white rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all hover:scale-105 duration-300 border-2 border-transparent hover:border-emerald-300">
-                <div className={`inline-flex p-4 bg-gradient-to-br from-${innovation.color}-100 to-${innovation.color}-200 rounded-2xl mb-6 shadow-lg`}>
-                  {React.cloneElement(innovation.icon, { className: `text-${innovation.color}-700` })}
-                </div>
-                <h3 className="text-2xl font-bold text-slate-800 mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
-                  {innovation.title}
-                </h3>
-                <p className="text-lg text-slate-600 mb-6 font-semibold">{innovation.subtitle}</p>
-                
-                <div className="space-y-3 mb-6">
-                  {innovation.stats.map((stat, idx) => (
-                    <div key={idx} className="flex items-center gap-3">
-                      <div className={`w-2.5 h-2.5 bg-${innovation.color}-500 rounded-full`}></div>
-                      <span className="text-base text-slate-700">{stat}</span>
+                        <div className={`relative max-w-7xl mx-auto px-6 py-20 z-10 transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+                            <div className="text-center mb-16">
+                                <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-400/30 to-yellow-400/30 backdrop-blur-xl border-2 border-amber-400/50 rounded-full mb-8 shadow-2xl">
+                                    <Award />
+                                    <span className="text-xl font-bold text-amber-200 uppercase tracking-wider">Funding Proposal: Climate Impact at Scale</span>
+                                </div>
+
+                                <h1 className="text-7xl md:text-8xl font-bold mb-8 leading-tight" style={{fontFamily: "'Playfair Display', serif"}}>
+                                    <span className="bg-gradient-to-r from-emerald-300 via-teal-300 to-blue-300 bg-clip-text text-transparent">
+                                        IMMeRSE
+                                    </span>
+                                </h1>
+                                
+                                <p className="text-3xl md:text-4xl text-white font-light mb-8 max-w-5xl mx-auto leading-relaxed">
+                                    Transform African Livestock Systems While Fighting Climate Change
+                                </p>
+
+                                <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed">
+                                    Integrated Methane Mitigation Strategies for Ruminant Sustainability in East Africa
+                                </p>
+                                
+                                <div className="grid md:grid-cols-4 gap-6 mb-16">
+                                    {impactMetrics.map((metric, index) => (
+                                        <div key={index} className="bg-white/15 backdrop-blur-xl border-2 border-white/30 rounded-2xl p-6 hover:bg-white/25 hover:scale-105 transition-all duration-300 shadow-2xl">
+                                            <div className="text-5xl md:text-6xl font-bold text-white mb-3" style={{fontFamily: "'Playfair Display', serif"}}>
+                                                {metric.value}
+                                            </div>
+                                            <div className="text-base md:text-lg text-white/90 font-medium">
+                                                {metric.label}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="bg-white/10 backdrop-blur-xl border-2 border-white/30 rounded-3xl p-8 md:p-12 shadow-2xl mb-8">
+                                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-8" style={{fontFamily: "'Playfair Display', serif"}}>
+                                        Why IMMeRSE is Your Best Climate Investment
+                                    </h2>
+                                    <div className="grid md:grid-cols-2 gap-6 md:gap-8 text-left">
+                                        <div>
+                                            <div className="flex items-center gap-4 mb-4">
+                                                <CheckCircle2 />
+                                                <span className="text-lg md:text-xl text-white font-semibold">Proven Technology (33% CH₄ Reduction)</span>
+                                            </div>
+                                            <div className="flex items-center gap-4 mb-4">
+                                                <CheckCircle2 />
+                                                <span className="text-lg md:text-xl text-white font-semibold">150M+ Ruminants Target Market</span>
+                                            </div>
+                                            <div className="flex items-center gap-4">
+                                                <CheckCircle2 />
+                                                <span className="text-lg md:text-xl text-white font-semibold">MRV-Ready for Carbon Markets</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div className="flex items-center gap-4 mb-4">
+                                                <CheckCircle2 />
+                                                <span className="text-lg md:text-xl text-white font-semibold">World-Class Multi-Institutional Team</span>
+                                            </div>
+                                            <div className="flex items-center gap-4 mb-4">
+                                                <CheckCircle2 />
+                                                <span className="text-lg md:text-xl text-white font-semibold">5-Country Platform for Africa-Wide Scale</span>
+                                            </div>
+                                            <div className="flex items-center gap-4">
+                                                <CheckCircle2 />
+                                                <span className="text-lg md:text-xl text-white font-semibold">Triple Impact: Climate + Food + Income</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="bg-gradient-to-r from-amber-500/20 to-yellow-500/20 backdrop-blur-xl border-2 border-amber-400/40 rounded-3xl p-6 md:p-8 shadow-2xl">
+                                    <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+                                        <DollarSign />
+                                        <p className="text-xl md:text-2xl text-white font-bold text-center">
+                                            Seeking Strategic Funding Partners for 3-Year Implementation (2026-2028)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  ))}
-                </div>
-                
-                <div className={`pt-6 border-t-2 border-${innovation.color}-100`}>
-                  <p className={`text-base font-bold text-${innovation.color}-700`}>
-                    {innovation.highlight}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
 
-      {/* KALPRO™ Proven Results */}
-      <div className="bg-gradient-to-br from-emerald-600 via-teal-600 to-blue-600 py-24 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 right-20 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-20 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-        </div>
+                    {/* Value Propositions */}
+                    <div className="py-20 md:py-24 bg-white">
+                        <div className="max-w-7xl mx-auto px-6">
+                            <div className="text-center mb-16 md:mb-20">
+                                <div className="inline-flex items-center gap-3 px-6 py-3 bg-emerald-100 rounded-full mb-6 shadow-lg">
+                                    <Briefcase />
+                                    <span className="text-base md:text-lg font-bold text-emerald-700 uppercase tracking-wider">Investment Value</span>
+                                </div>
+                                <h2 className="text-4xl md:text-6xl font-bold text-slate-800 mb-6" style={{fontFamily: "'Playfair Display', serif"}}>
+                                    Why Fund IMMeRSE?
+                                </h2>
+                                <p className="text-lg md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
+                                    Four compelling reasons this is a high-impact, low-risk investment in climate action
+                                </p>
+                            </div>
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/20 backdrop-blur rounded-full mb-6 shadow-lg">
-              <Award className="w-6 h-6 text-white" />
-              <span className="text-lg font-bold text-white uppercase tracking-wider">De-Risked Investment</span>
-            </div>
-            <h2 className="text-6xl font-bold text-white mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-              KALPRO™: Already Proven in the Field
-            </h2>
-            <p className="text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
-              4 years of field trials (2021-2024) demonstrate consistent performance
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-8 mb-16">
-            {[
-              { value: "33%", label: "Methane Reduction", sublabel: "(P<0.05 vs control)" },
-              { value: "15.7%", label: "Gas Production Increase", sublabel: "vs control" },
-              { value: "23.3%", label: "Better Than Commercial", sublabel: "probiotics" },
-              { value: "18", label: "Animal Field Trial", sublabel: "validated results" }
-            ].map((stat, index) => (
-              <div key={index} className="bg-white/15 backdrop-blur-xl border-2 border-white/30 rounded-2xl p-8 text-center hover:bg-white/25 transition-all shadow-2xl">
-                <div className="text-6xl font-bold text-white mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
-                  {stat.value}
-                </div>
-                <div className="text-xl font-semibold text-white mb-2">{stat.label}</div>
-                <div className="text-base text-white/80">{stat.sublabel}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="bg-white/15 backdrop-blur-xl border-2 border-white/30 rounded-3xl p-12 shadow-2xl">
-            <h3 className="text-3xl font-bold text-white mb-8" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Independent Revalidation at ILRI Mazingira Centre
-            </h3>
-            <p className="text-xl text-white/90 leading-relaxed mb-8">
-              All KALPRO™ results will be independently verified through rigorous in vitro and in vivo trials at ILRI's world-class Mazingira Centre, ensuring scientific credibility and donor confidence.
-            </p>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white/10 backdrop-blur rounded-2xl p-6">
-                <h4 className="font-bold text-white text-xl mb-3">In Vitro Validation</h4>
-                <p className="text-white/90 text-base">CH₄, VFA, pH, digestibility, and ME measurements</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur rounded-2xl p-6">
-                <h4 className="font-bold text-white text-xl mb-3">In Vivo Validation</h4>
-                <p className="text-white/90 text-base">Milk yield, weight gain, health parameters</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur rounded-2xl p-6">
-                <h4 className="font-bold text-white text-xl mb-3">Tier A-D Pipeline</h4>
-                <p className="text-white/90 text-base">From lab to on-farm at scale</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* World-Class Team */}
-      <div className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <h2 className="text-6xl font-bold text-slate-800 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Unprecedented Institutional Collaboration
-            </h2>
-            <p className="text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
-              World-class expertise across 10+ institutions spanning livestock science, marine biology, soil science, AI/ML, and climate policy
-            </p>
-          </div>
-
-          {/* Lead PIs */}
-          <div className="mb-16">
-            <h3 className="text-4xl font-bold text-slate-800 mb-10 text-center" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Leadership Team
-            </h3>
-            <div className="grid md:grid-cols-3 gap-8">
-              {leadPIs.map((pi, index) => (
-                <div key={index} className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-3xl p-8 border-4 border-emerald-200 shadow-xl hover:shadow-2xl transition-all hover:scale-105 duration-300">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-16 h-16 bg-emerald-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-                      {pi.name.split(' ')[1][0]}
+                            <div className="grid md:grid-cols-2 gap-8 md:gap-10">
+                                {valuePropositions.map((prop, index) => (
+                                    <div key={index} className={`bg-gradient-to-br from-${prop.color}-50 to-${prop.color}-100/50 rounded-3xl p-8 md:p-10 border-4 border-${prop.color}-200 shadow-xl hover:shadow-2xl transition-all hover:scale-105 duration-300`}>
+                                        <h3 className="text-2xl md:text-3xl font-bold text-slate-800 mb-4" style={{fontFamily: "'Playfair Display', serif"}}>
+                                            {prop.title}
+                                        </h3>
+                                        <p className="text-lg md:text-xl text-slate-700 leading-relaxed mb-6">
+                                            {prop.description}
+                                        </p>
+                                        <div className={`inline-flex items-center gap-2 px-5 py-3 bg-${prop.color}-600 text-white rounded-full font-bold text-base md:text-lg shadow-lg`}>
+                                            <Star />
+                                            {prop.roi}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                      <h4 className="text-2xl font-bold text-slate-800">{pi.name}</h4>
-                      <p className="text-lg font-semibold text-emerald-700">{pi.role}</p>
+
+                    {/* Six Innovations */}
+                    <div className="bg-gradient-to-br from-slate-50 to-blue-50 py-20 md:py-24">
+                        <div className="max-w-7xl mx-auto px-6">
+                            <div className="text-center mb-16 md:mb-20">
+                                <h2 className="text-4xl md:text-6xl font-bold text-slate-800 mb-6" style={{fontFamily: "'Playfair Display', serif"}}>
+                                    Six Integrated Innovation Streams
+                                </h2>
+                                <p className="text-lg md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
+                                    Comprehensive, synergistic approaches delivering measurable climate and productivity benefits
+                                </p>
+                            </div>
+
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                                {innovations.map((innovation, index) => (
+                                    <div key={index} className="bg-white rounded-3xl p-8 md:p-10 shadow-xl hover:shadow-2xl transition-all hover:scale-105 duration-300 border-2 border-transparent hover:border-emerald-300">
+                                        <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-2" style={{fontFamily: "'Playfair Display', serif"}}>
+                                            {innovation.title}
+                                        </h3>
+                                        <p className="text-base md:text-lg text-slate-600 mb-6 font-semibold">{innovation.subtitle}</p>
+                                        
+                                        <div className="space-y-3 mb-6">
+                                            {innovation.stats.map((stat, idx) => (
+                                                <div key={idx} className="flex items-center gap-3">
+                                                    <div className={`w-2.5 h-2.5 bg-${innovation.color}-500 rounded-full`}></div>
+                                                    <span className="text-sm md:text-base text-slate-700">{stat}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        
+                                        <div className={`pt-6 border-t-2 border-${innovation.color}-100`}>
+                                            <p className={`text-sm md:text-base font-bold text-${innovation.color}-700`}>
+                                                {innovation.highlight}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  <p className="text-base text-slate-700 mb-3 font-semibold">{pi.affiliation}</p>
-                  <p className="text-base text-slate-600 mb-4">{pi.country}</p>
-                  <p className="text-base text-slate-700 leading-relaxed">{pi.expertise}</p>
-                </div>
-              ))}
-            </div>
-          </div>
 
-          {/* Supervisors */}
-          <div className="mb-16">
-            <h3 className="text-4xl font-bold text-slate-800 mb-10 text-center" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Scientific Supervisors
-            </h3>
-            <div className="grid md:grid-cols-4 gap-6">
-              {supervisors.map((sup, index) => (
-                <div key={index} className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border-2 border-blue-200 shadow-lg hover:shadow-xl transition-all">
-                  <h4 className="font-bold text-xl text-slate-800 mb-2">{sup.name}</h4>
-                  <p className="text-base text-blue-700 font-semibold mb-2">{sup.role}</p>
-                  <p className="text-sm text-slate-600">{sup.institution}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+                    {/* KALPRO Proven Results */}
+                    <div className="bg-gradient-to-br from-emerald-600 via-teal-600 to-blue-600 py-20 md:py-24 relative overflow-hidden">
+                        <div className="absolute inset-0 opacity-10">
+                            <div className="absolute top-20 right-20 w-64 md:w-96 h-64 md:h-96 bg-white rounded-full blur-3xl"></div>
+                            <div className="absolute bottom-20 left-20 w-64 md:w-96 h-64 md:h-96 bg-white rounded-full blur-3xl"></div>
+                        </div>
 
-          {/* Regional Collaborators */}
-          <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-3xl p-12 border-2 border-slate-200 shadow-xl">
-            <h3 className="text-4xl font-bold text-slate-800 mb-10 text-center" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Regional Expert Network (11 Collaborators)
-            </h3>
-            <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {regionalExperts.map((expert, index) => (
-                <div key={index} className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
-                  <h4 className="font-bold text-lg text-slate-800 mb-2">{expert.name}</h4>
-                  <p className="text-sm text-slate-600 mb-2">{expert.role}</p>
-                  <p className="text-xs text-slate-500">{expert.institution}</p>
-                  <div className="mt-3 inline-block px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-semibold">
-                    {expert.country}
-                  </div>
-                </div>
-              ))}
-            </div>
+                        <div className="max-w-7xl mx-auto px-6 relative z-10">
+                            <div className="text-center mb-12 md:mb-16">
+                                <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/20 backdrop-blur rounded-full mb-6 shadow-lg">
+                                    <Award />
+                                    <span className="text-base md:text-lg font-bold text-white uppercase tracking-wider">De-Risked Investment</span>
+                                </div>
+                                <h2 className="text-4xl md:text-6xl font-bold text-white mb-6" style={{fontFamily: "'Playfair Display', serif"}}>
+                                    KALPRO™: Already Proven in the Field
+                                </h2>
+                                <p className="text-lg md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
+                                    4 years of field trials (2021-2024) demonstrate consistent performance
+                                </p>
+                            </div>
 
-            <div className="mt-12 text-center">
-              <p className="text-xl text-slate-700 font-semibold">
-                Spanning ILRI, KALRO, KMFRI, UDSM, EIAR, TALIRI, NARO, FAO-Rwanda, and AGNES
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-12 md:mb-16">
+                                {[
+                                    { value: "33%", label: "Methane Reduction", sublabel: "(P<0.05 vs control)" },
+                                    { value: "15.7%", label: "Gas Production Increase", sublabel: "vs control" },
+                                    { value: "23.3%", label: "Better Than Commercial", sublabel: "probiotics" },
+                                    { value: "18", label: "Animal Field Trial", sublabel: "validated results" }
+                                ].map((stat, index) => (
+                                    <div key={index} className="bg-white/15 backdrop-blur-xl border-2 border-white/30 rounded-2xl p-4 md:p-8 text-center hover:bg-white/25 transition-all shadow-2xl">
+                                        <div className="text-4xl md:text-6xl font-bold text-white mb-2 md:mb-3" style={{fontFamily: "'Playfair Display', serif"}}>
+                                            {stat.value}
+                                        </div>
+                                        <div className="text-sm md:text-xl font-semibold text-white mb-1 md:mb-2">{stat.label}</div>
+                                        <div className="text-xs md:text-base text-white/80">{stat.sublabel}</div>
+                                    </div>
+                                ))}
+                            </div>
 
-      {/* Implementation Timeline */}
-      <div className="bg-gradient-to-br from-slate-800 to-slate-900 py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <h2 className="text-6xl font-bold text-white mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-              3-Year Implementation Roadmap
-            </h2>
-            <p className="text-2xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
-              Clear milestones and deliverables ensure accountability and measurable progress
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {milestones.map((milestone, index) => (
-              <div key={index} className="bg-slate-700/50 backdrop-blur rounded-3xl p-10 border-2 border-slate-600 hover:border-emerald-400 transition-all shadow-2xl hover:scale-105 duration-300">
-                <div className="text-5xl font-bold text-emerald-400 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-                  {milestone.year}
-                </div>
-                <h3 className="text-3xl font-bold text-white mb-8">
-                  {milestone.title}
-                </h3>
-                <div className="space-y-4">
-                  {milestone.achievements.map((achievement, idx) => (
-                    <div key={idx} className="flex items-start gap-3">
-                      <CheckCircle2 className="w-6 h-6 text-emerald-400 flex-shrink-0 mt-1" />
-                      <span className="text-lg text-slate-300">{achievement}</span>
+                            <div className="bg-white/15 backdrop-blur-xl border-2 border-white/30 rounded-3xl p-8 md:p-12 shadow-2xl">
+                                <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 md:mb-8" style={{fontFamily: "'Playfair Display', serif"}}>
+                                    Independent Revalidation at ILRI Mazingira Centre
+                                </h3>
+                                <p className="text-lg md:text-xl text-white/90 leading-relaxed mb-6 md:mb-8">
+                                    All KALPRO™ results will be independently verified through rigorous in vitro and in vivo trials at ILRI's world-class Mazingira Centre.
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
 
-      {/* Strategic Alignment */}
-      <div className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <h2 className="text-6xl font-bold text-slate-800 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Strategic Global Alignment
-            </h2>
-            <p className="text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
-              Directly supports major international frameworks and development goals
-            </p>
-          </div>
+                    {/* Implementation Timeline */}
+                    <div className="bg-gradient-to-br from-slate-800 to-slate-900 py-20 md:py-24">
+                        <div className="max-w-7xl mx-auto px-6">
+                            <div className="text-center mb-16 md:mb-20">
+                                <h2 className="text-4xl md:text-6xl font-bold text-white mb-6" style={{fontFamily: "'Playfair Display', serif"}}>
+                                    3-Year Implementation Roadmap
+                                </h2>
+                                <p className="text-lg md:text-2xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
+                                    Clear milestones and deliverables ensure accountability and measurable progress
+                                </p>
+                            </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { title: "Global Methane Pledge", subtitle: "Innovation, Incentives, Public Trust, Policy", color: "emerald", org: "Spark Climate Solutions" },
-              { title: "AfDB Climate Action", subtitle: "Livestock methane reduction framework", color: "teal", org: "African Development Bank" },
-              { title: "FAO Guidelines", subtitle: "Low-cost, feed-based interventions", color: "blue", org: "Food and Agriculture Organization" },
-              { title: "MDG Targets", subtitle: "Poverty reduction, environmental sustainability, partnerships", color: "indigo", org: "Millennium Development Goals" }
-            ].map((framework, index) => (
-              <div key={index} className={`bg-gradient-to-br from-${framework.color}-50 to-${framework.color}-100 rounded-3xl p-8 border-4 border-${framework.color}-200 shadow-xl hover:shadow-2xl transition-all hover:scale-105 duration-300`}>
-                <h3 className={`text-2xl font-bold text-${framework.color}-800 mb-4`} style={{ fontFamily: "'Playfair Display', serif" }}>
-                  {framework.title}
-                </h3>
-                <p className="text-lg text-slate-700 mb-6 leading-relaxed">
-                  {framework.subtitle}
-                </p>
-                <p className={`text-sm font-bold text-${framework.color}-700`}>
-                  {framework.org}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+                            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+                                {milestones.map((milestone, index) => (
+                                    <div key={index} className="bg-slate-700/50 backdrop-blur rounded-3xl p-8 md:p-10 border-2 border-slate-600 hover:border-emerald-400 transition-all shadow-2xl hover:scale-105 duration-300">
+                                        <div className="text-4xl md:text-5xl font-bold text-emerald-400 mb-4 md:mb-6" style={{fontFamily: "'Playfair Display', serif"}}>
+                                            {milestone.year}
+                                        </div>
+                                        <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 md:mb-8">
+                                            {milestone.title}
+                                        </h3>
+                                        <div className="space-y-3 md:space-y-4">
+                                            {milestone.achievements.map((achievement, idx) => (
+                                                <div key={idx} className="flex items-start gap-3">
+                                                    <CheckCircle2 />
+                                                    <span className="text-base md:text-lg text-slate-300">{achievement}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
 
-      {/* Expected Impact & ROI */}
-      <div className="bg-gradient-to-br from-emerald-600 via-teal-600 to-blue-600 py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <h2 className="text-6xl font-bold text-white mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Transformational Impact & Returns
-            </h2>
-            <p className="text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
-              Multi-dimensional value creation across climate, economy, and society
-            </p>
-          </div>
+                    {/* Call to Action */}
+                    <div className="bg-gradient-to-br from-slate-900 via-emerald-900 to-teal-900 py-20 md:py-24 relative overflow-hidden">
+                        <div className="absolute inset-0 opacity-20">
+                            <div className="absolute top-20 right-20 w-64 md:w-96 h-64 md:h-96 bg-emerald-400 rounded-full blur-3xl animate-pulse"></div>
+                            <div className="absolute bottom-20 left-20 w-64 md:w-96 h-64 md:h-96 bg-blue-400 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+                        </div>
 
-          <div className="grid md:grid-cols-3 gap-10">
-            <div className="bg-white/15 backdrop-blur-xl rounded-3xl p-10 border-2 border-white/30 shadow-2xl">
-              <h3 className="text-3xl font-bold text-white mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-                Climate Impact
-              </h3>
-              <div className="space-y-5">
-                <div className="flex items-start gap-4">
-                  <CheckCircle2 className="w-7 h-7 text-emerald-300 flex-shrink-0 mt-1" />
-                  <span className="text-white text-lg">Direct enteric CH₄ reduction (~30% of warming)</span>
-                </div>
-                <div className="flex items-start gap-4">
-                  <CheckCircle2 className="w-7 h-7 text-emerald-300 flex-shrink-0 mt-1" />
-                  <span className="text-white text-lg">Manure CH₄/N₂O emissions reduction</span>
-                </div>
-                <div className="flex items-start gap-4">
-                  <CheckCircle2 className="w-7 h-7 text-emerald-300 flex-shrink-0 mt-1" />
-                  <span className="text-white text-lg">Soil carbon sequestration via biofertilizers</span>
-                </div>
-                <div className="flex items-start gap-4">
-                  <CheckCircle2 className="w-7 h-7 text-emerald-300 flex-shrink-0 mt-1" />
-                  <span className="text-white text-lg">Reduced synthetic fertilizer emissions</span>
-                </div>
-              </div>
-            </div>
+                        <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
+                            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 md:mb-8 leading-tight" style={{fontFamily: "'Playfair Display', serif"}}>
+                                Partner With Us: Funding Proposal for Continental Impact
+                            </h2>
+                            <p className="text-2xl md:text-3xl text-white/90 mb-12 md:mb-16 leading-relaxed">
+                                Seeking strategic partners to deliver climate impact at continental scale
+                            </p>
 
-            <div className="bg-white/15 backdrop-blur-xl rounded-3xl p-10 border-2 border-white/30 shadow-2xl">
-              <h3 className="text-3xl font-bold text-white mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-                Economic Returns
-              </h3>
-              <div className="space-y-5">
-                <div className="flex items-start gap-4">
-                  <CheckCircle2 className="w-7 h-7 text-emerald-300 flex-shrink-0 mt-1" />
-                  <span className="text-white text-lg">Increased milk yields & weight gains</span>
-                </div>
-                <div className="flex items-start gap-4">
-                  <CheckCircle2 className="w-7 h-7 text-emerald-300 flex-shrink-0 mt-1" />
-                  <span className="text-white text-lg">80% reduction in fertilizer costs</span>
-                </div>
-                <div className="flex items-start gap-4">
-                  <CheckCircle2 className="w-7 h-7 text-emerald-300 flex-shrink-0 mt-1" />
-                  <span className="text-white text-lg">Carbon credit revenue streams</span>
-                </div>
-                <div className="flex items-start gap-4">
-                  <CheckCircle2 className="w-7 h-7 text-emerald-300 flex-shrink-0 mt-1" />
-                  <span className="text-white text-lg">Enhanced food security & nutrition</span>
-                </div>
-              </div>
-            </div>
+                            <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16">
+                                {[
+                                    { label: "Project Duration", value: "3 Years (2026-2028)" },
+                                    { label: "Geographic Scope", value: "5 East African Countries" },
+                                    { label: "Impact Potential", value: "150M+ Ruminants" }
+                                ].map((item, index) => (
+                                    <div key={index} className="bg-white/15 backdrop-blur-xl border-2 border-white/30 rounded-2xl p-6 md:p-8 hover:bg-white/20 transition-all shadow-2xl">
+                                        <div className="font-bold text-white text-xl md:text-2xl mb-2 md:mb-3">{item.label}</div>
+                                        <div className="text-white/90 text-base md:text-xl">{item.value}</div>
+                                    </div>
+                                ))}
+                            </div>
 
-            <div className="bg-white/15 backdrop-blur-xl rounded-3xl p-10 border-2 border-white/30 shadow-2xl">
-              <h3 className="text-3xl font-bold text-white mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-                System Benefits
-              </h3>
-              <div className="space-y-5">
-                <div className="flex items-start gap-4">
-                  <CheckCircle2 className="w-7 h-7 text-emerald-300 flex-shrink-0 mt-1" />
-                  <span className="text-white text-lg">Continental blueprint for Africa-wide scale</span>
+                            <div className="bg-white/15 backdrop-blur-xl border-2 border-white/30 rounded-3xl p-8 md:p-12 shadow-2xl">
+                                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4" style={{fontFamily: "'Playfair Display', serif"}}>
+                                    Funding Proposal Inquiries
+                                </h3>
+                                <p className="text-lg md:text-xl text-emerald-300 mb-6 md:mb-8 font-semibold">
+                                    We are actively seeking funding partners to launch this transformative initiative
+                                </p>
+                                <div className="space-y-3 md:space-y-4 text-white mb-8 md:mb-10">
+                                    <p className="text-xl md:text-2xl font-semibold">International Livestock Research Institute (ILRI)</p>
+                                    <p className="text-xl md:text-2xl font-semibold">Kenya Agricultural and Livestock Research Organization (KALRO)</p>
+                                    <p className="text-lg md:text-xl mt-6 md:mt-8 text-white/90">In collaboration with KMFRI, UDSM, EIAR, TALIRI, NARO, FAO-Rwanda, and AGNES</p>
+                                </div>
+                                
+                                <div className="inline-flex items-center gap-3 px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-900 rounded-full text-lg md:text-xl font-bold shadow-2xl hover:scale-105 transition-all cursor-pointer">
+                                    <Briefcase />
+                                    <span>Seeking Strategic Funding Partners</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Footer */}
+                    <div className="bg-slate-950 py-8 md:py-12">
+                        <div className="max-w-7xl mx-auto px-6">
+                            <div className="text-center text-slate-400 text-sm md:text-lg mb-4 md:mb-6">
+                                <p className="font-bold text-white mb-3 md:mb-4 text-xl md:text-2xl">IMMeRSE Project 2026-2028</p>
+                                <p className="text-base md:text-xl mb-2 md:mb-3">International Livestock Research Institute (ILRI) • Kenya Agricultural and Livestock Research Organization (KALRO)</p>
+                                <p className="text-sm md:text-lg">KMFRI • UDSM • EIAR • TALIRI • NARO Uganda • FAO-Rwanda • AGNES</p>
+                            </div>
+                            <div className="text-center text-slate-500 text-xs md:text-base mt-6 md:mt-8">
+                                <p>Supporting the Global Enteric Methane Mitigation Roadmap • AfDB Climate Action Framework • MDG Targets</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className="flex items-start gap-4">
-                  <CheckCircle2 className="w-7 h-7 text-emerald-300 flex-shrink-0 mt-1" />
-                  <span className="text-white text-lg">MRV frameworks for NDC reporting</span>
-                </div>
-                <div className="flex items-start gap-4">
-                  <CheckCircle2 className="w-7 h-7 text-emerald-300 flex-shrink-0 mt-1" />
-                  <span className="text-white text-lg">Capacity building across 5+ countries</span>
-                </div>
-                <div className="flex items-start gap-4">
-                  <CheckCircle2 className="w-7 h-7 text-emerald-300 flex-shrink-0 mt-1" />
-                  <span className="text-white text-lg">Gender equity through women's empowerment</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            );
+        }
 
-      {/* Investment Call to Action */}
-      <div className="bg-gradient-to-br from-slate-900 via-emerald-900 to-teal-900 py-24 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-20 right-20 w-96 h-96 bg-emerald-400 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 left-20 w-96 h-96 bg-blue-400 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        </div>
-
-        <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
-          <h2 className="text-6xl font-bold text-white mb-8 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Partner With Us: Funding Proposal for Continental Impact
-          </h2>
-          <p className="text-3xl text-white/90 mb-16 leading-relaxed">
-            Seeking strategic partners to deliver climate impact at continental scale
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            {[
-              { label: "Project Duration", value: "3 Years (2026-2028)" },
-              { label: "Geographic Scope", value: "Kenya • Ethiopia • Tanzania • Rwanda • Uganda" },
-              { label: "Impact Potential", value: "150M+ Ruminants • 30% of Global Warming" }
-            ].map((item, index) => (
-              <div key={index} className="bg-white/15 backdrop-blur-xl border-2 border-white/30 rounded-2xl p-8 hover:bg-white/20 transition-all shadow-2xl">
-                <div className="font-bold text-white text-2xl mb-3">{item.label}</div>
-                <div className="text-white/90 text-xl">{item.value}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="bg-white/15 backdrop-blur-xl border-2 border-white/30 rounded-3xl p-12 shadow-2xl">
-            <h3 className="text-4xl font-bold text-white mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Funding Proposal Inquiries
-            </h3>
-            <p className="text-xl text-emerald-300 mb-8 font-semibold">We are actively seeking funding partners to launch this transformative initiative</p>
-            <div className="space-y-4 text-white mb-10">
-              <p className="text-2xl font-semibold">International Livestock Research Institute (ILRI)</p>
-              <p className="text-2xl font-semibold">Kenya Agricultural and Livestock Research Organization (KALRO)</p>
-              <p className="text-xl mt-8 text-white/90">In collaboration with KMFRI, UDSM, EIAR, TALIRI, NARO, FAO-Rwanda, and AGNES</p>
-            </div>
-            
-            <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-900 rounded-full text-xl font-bold shadow-2xl hover:scale-105 transition-all cursor-pointer">
-              <Briefcase className="w-6 h-6" />
-              <span>Seeking Strategic Funding Partners</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div className="bg-slate-950 py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center text-slate-400 text-lg mb-6">
-            <p className="font-bold text-white mb-4 text-2xl">IMMeRSE Project 2026-2028</p>
-            <p className="text-xl mb-3">International Livestock Research Institute (ILRI) • Kenya Agricultural and Livestock Research Organization (KALRO)</p>
-            <p className="text-lg">Kenya Marine and Fisheries Research Institute (KMFRI) • University of Dar es Salaam (UDSM)</p>
-            <p className="text-lg">Ethiopian Institute of Agricultural Research (EIAR) • Tanzania Livestock Research Institute (TALIRI)</p>
-            <p className="text-lg">National Agricultural Research Organisation (NARO) Uganda • FAO-Rwanda • African Group of Negotiators Experts Support (AGNES)</p>
-          </div>
-          <div className="text-center text-slate-500 text-base mt-8">
-            <p>Supporting the Global Enteric Methane Mitigation Roadmap • AfDB Climate Action Framework • FAO Guidelines • MDG Targets</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+        // Render the app
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<IMMeRSEDonorPage />);
+    </script>
+</body>
+</html>
