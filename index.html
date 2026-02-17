@@ -3,645 +3,1093 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMMeRSE - Integrated Methane Mitigation Strategies for Ruminant Sustainability in East Africa</title>
-    <meta name="description" content="IMMeRSE: Transforming African livestock systems while fighting climate change. 33% proven methane reduction across 150M+ ruminants in 5 East African countries.">
-    
+    <title>IMMRSE-AFRICA — Integrated Methane Mitigation for Ruminant Sustainability & Efficiency in Africa</title>
+    <meta name="description" content="IMMRSE-AFRICA: A continentally coordinated platform to scale proven methane mitigation solutions across African livestock systems. Reducing emissions, boosting productivity, transforming livelihoods.">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['"Playfair Display"', 'serif'],
+                        body: ['"Inter"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            200: '#a7f3d0',
+                            300: '#6ee7b7',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- React and ReactDOM -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
-    <!-- Babel Standalone for JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- Lucide React Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: #1e293b; overflow-x: hidden; }
+
+        /* Hero gradient animation */
+        .hero-bg {
+            background: linear-gradient(135deg, #064e3b 0%, #065f46 20%, #047857 40%, #0f766e 60%, #155e75 80%, #1e3a5f 100%);
+            background-size: 300% 300%;
+            animation: heroShift 12s ease infinite;
+        }
+        @keyframes heroShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: float 8s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-40px) scale(1.1); }
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Counter animation */
+        .counter { display: inline-block; }
+
+        /* Card hover glow */
+        .glow-card {
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        .glow-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, #10b981, #06b6d4, #8b5cf6);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+        .glow-card:hover::before { opacity: 1; }
+        .glow-card:hover { transform: translateY(-6px); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+
+        /* Gradient text utility */
+        .gradient-text {
+            background: linear-gradient(135deg, #34d399, #06b6d4, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Timeline connector */
+        .timeline-line {
+            position: relative;
+        }
+        .timeline-line::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -2rem;
+            width: 2rem;
+            height: 3px;
+            background: linear-gradient(90deg, #10b981, transparent);
+        }
+        .timeline-line:last-child::after { display: none; }
+
+        /* Stat card pulse */
+        .stat-pulse {
+            animation: pulse-ring 3s ease-in-out infinite;
+        }
+        @keyframes pulse-ring {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.3); }
+            50% { box-shadow: 0 0 0 15px rgba(52, 211, 153, 0); }
+        }
+
+        /* SDG badge */
+        .sdg-badge {
+            transition: transform 0.3s ease;
+        }
+        .sdg-badge:hover { transform: scale(1.15) rotate(-3deg); }
+
+        /* Navigation */
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* Smooth section divider */
+        .section-wave {
+            position: relative;
+        }
+        .section-wave::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: inherit;
+            clip-path: ellipse(55% 100% at 50% 100%);
+        }
+
+        /* Impact number styling */
+        .impact-num {
+            font-family: 'Playfair Display', serif;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        /* Innovation icon container */
+        .icon-container {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            flex-shrink: 0;
+        }
+
+        /* Progress bar animation */
+        .progress-bar {
+            animation: progressFill 2s ease forwards;
+            transform-origin: left;
+        }
+        @keyframes progressFill {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
         }
     </style>
 </head>
 <body>
-    <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
-        
-        // Lucide icon components
-        const Leaf = () => <i data-lucide="leaf"></i>;
-        const Droplets = () => <i data-lucide="droplets"></i>;
-        const BarChart3 = () => <i data-lucide="bar-chart-3"></i>;
-        const Globe2 = () => <i data-lucide="globe-2"></i>;
-        const Target = () => <i data-lucide="target"></i>;
-        const TrendingUp = () => <i data-lucide="trending-up"></i>;
-        const Users = () => <i data-lucide="users"></i>;
-        const Sprout = () => <i data-lucide="sprout"></i>;
-        const FlaskConical = () => <i data-lucide="flask-conical"></i>;
-        const Database = () => <i data-lucide="database"></i>;
-        const Layers = () => <i data-lucide="layers"></i>;
-        const Microscope = () => <i data-lucide="microscope"></i>;
-        const Award = () => <i data-lucide="award"></i>;
-        const CheckCircle2 = () => <i data-lucide="check-circle-2"></i>;
-        const ArrowRight = () => <i data-lucide="arrow-right"></i>;
-        const Zap = () => <i data-lucide="zap"></i>;
-        const Recycle = () => <i data-lucide="recycle"></i>;
-        const Star = () => <i data-lucide="star"></i>;
-        const DollarSign = () => <i data-lucide="dollar-sign"></i>;
-        const PieChart = () => <i data-lucide="pie-chart"></i>;
-        const Shield = () => <i data-lucide="shield"></i>;
-        const Briefcase = () => <i data-lucide="briefcase"></i>;
-        const BookOpen = () => <i data-lucide="book-open"></i>;
-        const Network = () => <i data-lucide="network"></i>;
+    <!-- Sticky Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-blur bg-slate-900/80 border-b border-white/10 transition-all duration-300" style="transform: translateY(-100%);">
+        <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+            <a href="#hero" class="text-xl font-bold text-white font-display tracking-wide">IMMRSE<span class="text-emerald-400">-AFRICA</span></a>
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium text-white/80">
+                <a href="#challenge" class="hover:text-emerald-400 transition-colors">The Challenge</a>
+                <a href="#innovations" class="hover:text-emerald-400 transition-colors">Innovations</a>
+                <a href="#impact" class="hover:text-emerald-400 transition-colors">Impact</a>
+                <a href="#team" class="hover:text-emerald-400 transition-colors">Team</a>
+                <a href="#timeline" class="hover:text-emerald-400 transition-colors">Roadmap</a>
+                <a href="#cta" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-white rounded-full transition-colors font-semibold">Partner With Us</a>
+            </div>
+        </div>
+    </nav>
 
-        function IMMeRSEDonorPage() {
-            const [isVisible, setIsVisible] = useState(false);
-            
-            useEffect(() => {
-                setIsVisible(true);
-                // Initialize Lucide icons
-                if (window.lucide) {
-                    window.lucide.createIcons();
-                }
-            }, []);
+    <!-- ==================== HERO ==================== -->
+    <section id="hero" class="hero-bg relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- Floating particles -->
+        <div class="particle bg-emerald-300 w-72 h-72" style="top:10%;left:5%;animation-delay:0s;"></div>
+        <div class="particle bg-cyan-300 w-96 h-96" style="top:60%;right:5%;animation-delay:2s;"></div>
+        <div class="particle bg-teal-200 w-56 h-56" style="bottom:15%;left:30%;animation-delay:4s;"></div>
+        <div class="particle bg-blue-300 w-40 h-40" style="top:20%;right:25%;animation-delay:1s;"></div>
 
-            useEffect(() => {
-                // Re-initialize icons after component updates
-                if (window.lucide) {
-                    window.lucide.createIcons();
-                }
-            });
+        <div class="relative z-10 max-w-7xl mx-auto px-6 py-24 text-center">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-3 px-6 py-3 bg-white/10 backdrop-blur-xl border border-amber-400/40 rounded-full mb-10 shadow-lg">
+                <i data-lucide="award" class="w-5 h-5 text-amber-300"></i>
+                <span class="text-sm md:text-base font-bold text-amber-200 uppercase tracking-widest">Continental Climate Initiative &mdash; Seeking Funding Partners</span>
+            </div>
 
-            const impactMetrics = [
-                { value: "150M+", label: "East African Ruminants", color: "emerald" },
-                { value: "5", label: "Countries", color: "teal" },
-                { value: "33%", label: "CH₄ Reduction (Proven)", color: "blue" },
-                { value: "30%", label: "Contribution to Global Warming", color: "indigo" }
-            ];
+            <!-- Title -->
+            <h1 class="font-display text-6xl md:text-8xl lg:text-9xl font-black mb-6 leading-none tracking-tight">
+                <span class="gradient-text">IMMRSE</span><span class="text-white/90">&ndash;</span><span class="text-white">AFRICA</span>
+            </h1>
 
-            const innovations = [
-                {
-                    title: "KALPRO™ Probiotic",
-                    subtitle: "Validated Field Performance",
-                    stats: ["33% CH₄ reduction", "15.7% gas production ↑", "Milk yield increase", "Weight gain boost"],
-                    highlight: "Proven in 18-animal field trials (2021-2024)",
-                    color: "emerald"
-                },
-                {
-                    title: "Seaweed Portfolio",
-                    subtitle: "Western Indian Ocean Biodiversity",
-                    stats: ["386+ species cataloged", "214 Rhodophyta (red algae)", "Up to 15% crude fat", "Bromoform-rich compounds"],
-                    highlight: "Systematic screening across Kenya, Tanzania, Mozambique",
-                    color: "teal"
-                },
-                {
-                    title: "Low-Methane TMRs",
-                    subtitle: "Indigenous & Optimized",
-                    stats: ["Tannin-rich legumes", "Saponin compounds", "Local oilseed cakes", "Nutrient-optimized"],
-                    highlight: "Culturally appropriate, cost-effective solutions",
-                    color: "blue"
-                },
-                {
-                    title: "Rapid Diagnostic Tool",
-                    subtitle: "Field-Deployable Formate Assay",
-                    stats: ["Colorimetric detection", "Lab & strip formats", "Real-time screening", "Low-cost deployment"],
-                    highlight: "Addresses Roadmap call for affordable tools",
-                    color: "indigo"
-                },
-                {
-                    title: "Circular System",
-                    subtitle: "Manure-to-Biofertilizer",
-                    stats: ["80% DAP replacement", "CH₄/N₂O reduction", "Soil carbon sequestration", "Food security boost"],
-                    highlight: "Triple climate benefit + farmer income",
-                    color: "purple"
-                },
-                {
-                    title: "AI/ML Platform",
-                    subtitle: "Predictive Analytics",
-                    stats: ["Machine learning models", "Microbiome integration", "MRV-ready outputs", "Decision support tools"],
-                    highlight: "Carbon market readiness built-in",
-                    color: "pink"
-                }
-            ];
+            <p class="text-lg md:text-2xl text-white/80 font-light max-w-4xl mx-auto mb-4 leading-relaxed">
+                Integrated Methane Mitigation for Ruminant Sustainability &amp; Efficiency in Africa
+            </p>
 
-            const valuePropositions = [
-                {
-                    title: "Carbon Market Ready",
-                    description: "MRV frameworks built into methodology from day one. Generate verified emission reductions suitable for carbon credits.",
-                    roi: "Direct pathway to climate finance",
-                    color: "emerald"
-                },
-                {
-                    title: "Proven Results",
-                    description: "33% methane reduction and productivity gains already demonstrated in field trials. Not starting from zero.",
-                    roi: "Lower risk, faster deployment",
-                    color: "teal"
-                },
-                {
-                    title: "Regional Scale",
-                    description: "Multi-country platform spanning 5 nations creates continental blueprint for replication across all of Africa.",
-                    roi: "Exponential impact potential",
-                    color: "blue"
-                },
-                {
-                    title: "World-Class Team",
-                    description: "ILRI, KALRO, KMFRI, UDSM, EIAR, TALIRI, NARO, FAO, and AGNES. Unprecedented institutional collaboration.",
-                    roi: "Execution certainty",
-                    color: "indigo"
-                }
-            ];
+            <p class="text-xl md:text-3xl text-white font-semibold max-w-3xl mx-auto mb-14 leading-snug">
+                Reducing livestock emissions. Boosting productivity.<br class="hidden md:block"> Transforming livelihoods across the continent.
+            </p>
 
-            const milestones = [
-                { 
-                    year: "Year 1", 
-                    title: "Foundation & Validation", 
-                    achievements: ["High-throughput screening (Tier A & B)", "Formate assay development", "KALPRO™ revalidation at ILRI", "Seaweed portfolio screening", "Microbiome baseline"] 
-                },
-                { 
-                    year: "Year 2", 
-                    title: "Scale & Integration", 
-                    achievements: ["On-station trials (Tier C)", "AI/ML model development", "Multi-farm validation begins (Tier D)", "Manure-to-biofertilizer pilots", "Regional capacity building"] 
-                },
-                { 
-                    year: "Year 3", 
-                    title: "Impact & Deployment", 
-                    achievements: ["Full on-farm validation across 5 countries", "MRV framework finalization", "Carbon credit protocols", "Policy briefs & scale-up plans", "Continental expansion roadmap"] 
-                }
-            ];
+            <!-- Hero Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-14">
+                <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 md:p-7 stat-pulse">
+                    <div class="impact-num text-4xl md:text-6xl text-white mb-2">150M+</div>
+                    <div class="text-sm md:text-base text-white/80 font-medium">Ruminants in Target Region</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 md:p-7 stat-pulse" style="animation-delay:0.5s;">
+                    <div class="impact-num text-4xl md:text-6xl text-white mb-2">7+</div>
+                    <div class="text-sm md:text-base text-white/80 font-medium">Countries Across Africa</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 md:p-7 stat-pulse" style="animation-delay:1s;">
+                    <div class="impact-num text-4xl md:text-6xl text-white mb-2">33%</div>
+                    <div class="text-sm md:text-base text-white/80 font-medium">CH&#8324; Reduction Proven</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 md:p-7 stat-pulse" style="animation-delay:1.5s;">
+                    <div class="impact-num text-4xl md:text-6xl text-white mb-2">5</div>
+                    <div class="text-sm md:text-base text-white/80 font-medium">SDGs Directly Addressed</div>
+                </div>
+            </div>
 
-            return (
-                <div className="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50/20 to-blue-50/20">
-                    {/* Hero Section */}
-                    <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-emerald-900 to-teal-900 min-h-screen flex items-center">
-                        <div className="absolute inset-0 opacity-30">
-                            <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-400 rounded-full blur-3xl animate-pulse"></div>
-                            <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-400 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-                        </div>
+            <!-- Key selling points -->
+            <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 md:p-10 max-w-5xl mx-auto mb-10">
+                <div class="grid md:grid-cols-2 gap-4 text-left">
+                    <div class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-400 flex-shrink-0"></i><span class="text-white text-base md:text-lg font-medium">Proven Technology — Field-Validated Since 2021</span></div>
+                    <div class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-400 flex-shrink-0"></i><span class="text-white text-base md:text-lg font-medium">MRV-Ready for Carbon Markets & Climate Finance</span></div>
+                    <div class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-400 flex-shrink-0"></i><span class="text-white text-base md:text-lg font-medium">World-Class Multi-Institutional Consortium</span></div>
+                    <div class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-400 flex-shrink-0"></i><span class="text-white text-base md:text-lg font-medium">Triple Impact: Climate + Food Security + Income</span></div>
+                    <div class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-400 flex-shrink-0"></i><span class="text-white text-base md:text-lg font-medium">Continental Scale — East &amp; West Africa</span></div>
+                    <div class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-400 flex-shrink-0"></i><span class="text-white text-base md:text-lg font-medium">Gender-Responsive &amp; Inclusive Design</span></div>
+                </div>
+            </div>
 
-                        <div className={`relative max-w-7xl mx-auto px-6 py-20 z-10 transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-                            <div className="text-center mb-16">
-                                <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-400/30 to-yellow-400/30 backdrop-blur-xl border-2 border-amber-400/50 rounded-full mb-8 shadow-2xl">
-                                    <Award />
-                                    <span className="text-xl font-bold text-amber-200 uppercase tracking-wider">Funding Proposal: Climate Impact at Scale</span>
-                                </div>
+            <!-- Scroll hint -->
+            <a href="#challenge" class="inline-flex flex-col items-center text-white/60 hover:text-white transition-colors">
+                <span class="text-sm mb-2">Explore the Opportunity</span>
+                <i data-lucide="chevron-down" class="w-6 h-6 animate-bounce"></i>
+            </a>
+        </div>
+    </section>
 
-                                <h1 className="text-7xl md:text-8xl font-bold mb-8 leading-tight" style={{fontFamily: "'Playfair Display', serif"}}>
-                                    <span className="bg-gradient-to-r from-emerald-300 via-teal-300 to-blue-300 bg-clip-text text-transparent">
-                                        IMMeRSE
-                                    </span>
-                                </h1>
-                                
-                                <p className="text-3xl md:text-4xl text-white font-light mb-8 max-w-5xl mx-auto leading-relaxed">
-                                    Transform African Livestock Systems While Fighting Climate Change
-                                </p>
+    <!-- ==================== THE CHALLENGE ==================== -->
+    <section id="challenge" class="py-20 md:py-28 bg-white relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal text-center mb-16">
+                <div class="inline-flex items-center gap-2 px-5 py-2 bg-red-50 border border-red-200 rounded-full mb-6">
+                    <i data-lucide="alert-triangle" class="w-4 h-4 text-red-500"></i>
+                    <span class="text-sm font-bold text-red-700 uppercase tracking-wider">The Challenge</span>
+                </div>
+                <h2 class="font-display text-4xl md:text-6xl font-bold text-slate-800 mb-6">Africa&rsquo;s Quadruple Livestock Crisis</h2>
+                <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                    Enteric methane costs farmers 3&ndash;12% of feed energy while driving ~30% of current global warming. African livestock systems face interconnected challenges that demand an integrated solution.
+                </p>
+            </div>
 
-                                <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed">
-                                    Integrated Methane Mitigation Strategies for Ruminant Sustainability in East Africa
-                                </p>
-                                
-                                <div className="grid md:grid-cols-4 gap-6 mb-16">
-                                    {impactMetrics.map((metric, index) => (
-                                        <div key={index} className="bg-white/15 backdrop-blur-xl border-2 border-white/30 rounded-2xl p-6 hover:bg-white/25 hover:scale-105 transition-all duration-300 shadow-2xl">
-                                            <div className="text-5xl md:text-6xl font-bold text-white mb-3" style={{fontFamily: "'Playfair Display', serif"}}>
-                                                {metric.value}
-                                            </div>
-                                            <div className="text-base md:text-lg text-white/90 font-medium">
-                                                {metric.label}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <div className="bg-white/10 backdrop-blur-xl border-2 border-white/30 rounded-3xl p-8 md:p-12 shadow-2xl mb-8">
-                                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-8" style={{fontFamily: "'Playfair Display', serif"}}>
-                                        Why IMMeRSE is Your Best Climate Investment
-                                    </h2>
-                                    <div className="grid md:grid-cols-2 gap-6 md:gap-8 text-left">
-                                        <div>
-                                            <div className="flex items-center gap-4 mb-4">
-                                                <CheckCircle2 />
-                                                <span className="text-lg md:text-xl text-white font-semibold">Proven Technology (33% CH₄ Reduction)</span>
-                                            </div>
-                                            <div className="flex items-center gap-4 mb-4">
-                                                <CheckCircle2 />
-                                                <span className="text-lg md:text-xl text-white font-semibold">150M+ Ruminants Target Market</span>
-                                            </div>
-                                            <div className="flex items-center gap-4">
-                                                <CheckCircle2 />
-                                                <span className="text-lg md:text-xl text-white font-semibold">MRV-Ready for Carbon Markets</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div className="flex items-center gap-4 mb-4">
-                                                <CheckCircle2 />
-                                                <span className="text-lg md:text-xl text-white font-semibold">World-Class Multi-Institutional Team</span>
-                                            </div>
-                                            <div className="flex items-center gap-4 mb-4">
-                                                <CheckCircle2 />
-                                                <span className="text-lg md:text-xl text-white font-semibold">5-Country Platform for Africa-Wide Scale</span>
-                                            </div>
-                                            <div className="flex items-center gap-4">
-                                                <CheckCircle2 />
-                                                <span className="text-lg md:text-xl text-white font-semibold">Triple Impact: Climate + Food + Income</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="bg-gradient-to-r from-amber-500/20 to-yellow-500/20 backdrop-blur-xl border-2 border-amber-400/40 rounded-3xl p-6 md:p-8 shadow-2xl">
-                                    <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-                                        <DollarSign />
-                                        <p className="text-xl md:text-2xl text-white font-bold text-center">
-                                            Seeking Strategic Funding Partners for 3-Year Implementation (2026-2028)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+                <div class="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-7 border border-red-100 glow-card">
+                    <div class="icon-container bg-red-100 mb-5">
+                        <i data-lucide="flame" class="w-7 h-7 text-red-600"></i>
                     </div>
-
-                    {/* Value Propositions */}
-                    <div className="py-20 md:py-24 bg-white">
-                        <div className="max-w-7xl mx-auto px-6">
-                            <div className="text-center mb-16 md:mb-20">
-                                <div className="inline-flex items-center gap-3 px-6 py-3 bg-emerald-100 rounded-full mb-6 shadow-lg">
-                                    <Briefcase />
-                                    <span className="text-base md:text-lg font-bold text-emerald-700 uppercase tracking-wider">Investment Value</span>
-                                </div>
-                                <h2 className="text-4xl md:text-6xl font-bold text-slate-800 mb-6" style={{fontFamily: "'Playfair Display', serif"}}>
-                                    Why Fund IMMeRSE?
-                                </h2>
-                                <p className="text-lg md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
-                                    Four compelling reasons this is a high-impact, low-risk investment in climate action
-                                </p>
-                            </div>
-
-                            <div className="grid md:grid-cols-2 gap-8 md:gap-10">
-                                {valuePropositions.map((prop, index) => (
-                                    <div key={index} className={`bg-gradient-to-br from-${prop.color}-50 to-${prop.color}-100/50 rounded-3xl p-8 md:p-10 border-4 border-${prop.color}-200 shadow-xl hover:shadow-2xl transition-all hover:scale-105 duration-300`}>
-                                        <h3 className="text-2xl md:text-3xl font-bold text-slate-800 mb-4" style={{fontFamily: "'Playfair Display', serif"}}>
-                                            {prop.title}
-                                        </h3>
-                                        <p className="text-lg md:text-xl text-slate-700 leading-relaxed mb-6">
-                                            {prop.description}
-                                        </p>
-                                        <div className={`inline-flex items-center gap-2 px-5 py-3 bg-${prop.color}-600 text-white rounded-full font-bold text-base md:text-lg shadow-lg`}>
-                                            <Star />
-                                            {prop.roi}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">High Enteric Methane</h3>
+                    <p class="text-slate-600 leading-relaxed">Enteric fermentation is a major contributor to agricultural GHG emissions across Africa — and a direct loss of productive energy for animals.</p>
+                </div>
+                <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-7 border border-amber-100 glow-card">
+                    <div class="icon-container bg-amber-100 mb-5">
+                        <i data-lucide="trending-down" class="w-7 h-7 text-amber-600"></i>
                     </div>
-
-                    {/* Six Innovations */}
-                    <div className="bg-gradient-to-br from-slate-50 to-blue-50 py-20 md:py-24">
-                        <div className="max-w-7xl mx-auto px-6">
-                            <div className="text-center mb-16 md:mb-20">
-                                <h2 className="text-4xl md:text-6xl font-bold text-slate-800 mb-6" style={{fontFamily: "'Playfair Display', serif"}}>
-                                    Six Integrated Innovation Streams
-                                </h2>
-                                <p className="text-lg md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
-                                    Comprehensive, synergistic approaches delivering measurable climate and productivity benefits
-                                </p>
-                            </div>
-
-                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                                {innovations.map((innovation, index) => (
-                                    <div key={index} className="bg-white rounded-3xl p-8 md:p-10 shadow-xl hover:shadow-2xl transition-all hover:scale-105 duration-300 border-2 border-transparent hover:border-emerald-300">
-                                        <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-2" style={{fontFamily: "'Playfair Display', serif"}}>
-                                            {innovation.title}
-                                        </h3>
-                                        <p className="text-base md:text-lg text-slate-600 mb-6 font-semibold">{innovation.subtitle}</p>
-                                        
-                                        <div className="space-y-3 mb-6">
-                                            {innovation.stats.map((stat, idx) => (
-                                                <div key={idx} className="flex items-center gap-3">
-                                                    <div className={`w-2.5 h-2.5 bg-${innovation.color}-500 rounded-full`}></div>
-                                                    <span className="text-sm md:text-base text-slate-700">{stat}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                        
-                                        <div className={`pt-6 border-t-2 border-${innovation.color}-100`}>
-                                            <p className={`text-sm md:text-base font-bold text-${innovation.color}-700`}>
-                                                {innovation.highlight}
-                                            </p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Low Productivity</h3>
+                    <p class="text-slate-600 leading-relaxed">Seasonal feed scarcity, poor forage quality, and sub-optimal rations constrain intake, digestibility, milk yield, and farmer income.</p>
+                </div>
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-7 border border-purple-100 glow-card">
+                    <div class="icon-container bg-purple-100 mb-5">
+                        <i data-lucide="heart-pulse" class="w-7 h-7 text-purple-600"></i>
                     </div>
-
-                    {/* KALPRO Proven Results */}
-                    <div className="bg-gradient-to-br from-emerald-600 via-teal-600 to-blue-600 py-20 md:py-24 relative overflow-hidden">
-                        <div className="absolute inset-0 opacity-10">
-                            <div className="absolute top-20 right-20 w-64 md:w-96 h-64 md:h-96 bg-white rounded-full blur-3xl"></div>
-                            <div className="absolute bottom-20 left-20 w-64 md:w-96 h-64 md:h-96 bg-white rounded-full blur-3xl"></div>
-                        </div>
-
-                        <div className="max-w-7xl mx-auto px-6 relative z-10">
-                            <div className="text-center mb-12 md:mb-16">
-                                <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/20 backdrop-blur rounded-full mb-6 shadow-lg">
-                                    <Award />
-                                    <span className="text-base md:text-lg font-bold text-white uppercase tracking-wider">De-Risked Investment</span>
-                                </div>
-                                <h2 className="text-4xl md:text-6xl font-bold text-white mb-6" style={{fontFamily: "'Playfair Display', serif"}}>
-                                    KALPRO™: Already Proven in the Field
-                                </h2>
-                                <p className="text-lg md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
-                                    4 years of field trials (2021-2024) demonstrate consistent performance
-                                </p>
-                            </div>
-
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-12 md:mb-16">
-                                {[
-                                    { value: "33%", label: "Methane Reduction", sublabel: "(P<0.05 vs control)" },
-                                    { value: "15.7%", label: "Gas Production Increase", sublabel: "vs control" },
-                                    { value: "23.3%", label: "Better Than Commercial", sublabel: "probiotics" },
-                                    { value: "18", label: "Animal Field Trial", sublabel: "validated results" }
-                                ].map((stat, index) => (
-                                    <div key={index} className="bg-white/15 backdrop-blur-xl border-2 border-white/30 rounded-2xl p-4 md:p-8 text-center hover:bg-white/25 transition-all shadow-2xl">
-                                        <div className="text-4xl md:text-6xl font-bold text-white mb-2 md:mb-3" style={{fontFamily: "'Playfair Display', serif"}}>
-                                            {stat.value}
-                                        </div>
-                                        <div className="text-sm md:text-xl font-semibold text-white mb-1 md:mb-2">{stat.label}</div>
-                                        <div className="text-xs md:text-base text-white/80">{stat.sublabel}</div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <div className="bg-white/15 backdrop-blur-xl border-2 border-white/30 rounded-3xl p-8 md:p-12 shadow-2xl">
-                                <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 md:mb-8" style={{fontFamily: "'Playfair Display', serif"}}>
-                                    Independent Revalidation at ILRI Mazingira Centre
-                                </h3>
-                                <p className="text-lg md:text-xl text-white/90 leading-relaxed mb-6 md:mb-8">
-                                    All KALPRO™ results will be independently verified through rigorous in vitro and in vivo trials at ILRI's world-class Mazingira Centre.
-                                </p>
-                            </div>
-                        </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Reproductive Inefficiency</h3>
+                    <p class="text-slate-600 leading-relaxed">Heat detection accuracy of only 50&ndash;70% and calving intervals of 18&ndash;24 months drastically reduce lifetime milk yield and herd profitability.</p>
+                </div>
+                <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-7 border border-blue-100 glow-card">
+                    <div class="icon-container bg-blue-100 mb-5">
+                        <i data-lucide="gauge" class="w-7 h-7 text-blue-600"></i>
                     </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Limited Tools</h3>
+                    <p class="text-slate-600 leading-relaxed">Most validated mitigation technologies remain inaccessible to African smallholders. Affordable methane measurement systems are scarce.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                    {/* World-Class Team Section */}
-                    <div className="py-20 md:py-24 bg-white">
-                        <div className="max-w-7xl mx-auto px-6">
-                            <div className="text-center mb-16 md:mb-20">
-                                <div className="inline-flex items-center gap-3 px-6 py-3 bg-blue-100 rounded-full mb-6 shadow-lg">
-                                    <Users />
-                                    <span className="text-base md:text-lg font-bold text-blue-700 uppercase tracking-wider">Execution Team</span>
-                                </div>
-                                <h2 className="text-4xl md:text-6xl font-bold text-slate-800 mb-6" style={{fontFamily: "'Playfair Display', serif"}}>
-                                    World-Class Multi-Institutional Team
-                                </h2>
-                                <p className="text-lg md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
-                                    Proven expertise across livestock science, marine biology, soil science, AI/ML, and climate policy
-                                </p>
-                            </div>
+    <!-- ==================== OUR ANSWER ==================== -->
+    <section class="py-16 md:py-20 bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-700 relative overflow-hidden">
+        <div class="particle bg-white w-64 h-64" style="top:-10%;right:10%;animation-delay:1s;opacity:0.08;"></div>
+        <div class="max-w-5xl mx-auto px-6 text-center reveal">
+            <h2 class="font-display text-3xl md:text-5xl font-bold text-white mb-6">IMMRSE-AFRICA: The Integrated Answer</h2>
+            <p class="text-lg md:text-xl text-white/90 leading-relaxed max-w-4xl mx-auto mb-8">
+                A continentally coordinated platform — evolved from the original IMMeRSE regional initiative following World Bank Group guidance — that combines <strong>feed innovation, probiotic technology, affordable diagnostics, drone-based MRV, circular bio-economy, and AI-driven analytics</strong> into a single, scalable system.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="px-4 py-2 bg-white/20 backdrop-blur rounded-full text-white text-sm font-semibold border border-white/30">Ethiopia</span>
+                <span class="px-4 py-2 bg-white/20 backdrop-blur rounded-full text-white text-sm font-semibold border border-white/30">Kenya</span>
+                <span class="px-4 py-2 bg-white/20 backdrop-blur rounded-full text-white text-sm font-semibold border border-white/30">Uganda</span>
+                <span class="px-4 py-2 bg-white/20 backdrop-blur rounded-full text-white text-sm font-semibold border border-white/30">Tanzania</span>
+                <span class="px-4 py-2 bg-white/20 backdrop-blur rounded-full text-white text-sm font-semibold border border-white/30">Rwanda</span>
+                <span class="px-4 py-2 bg-white/25 backdrop-blur rounded-full text-white text-sm font-bold border border-amber-300/50">Nigeria</span>
+                <span class="px-4 py-2 bg-white/25 backdrop-blur rounded-full text-white text-sm font-bold border border-amber-300/50">Benin</span>
+                <span class="px-4 py-2 bg-white/25 backdrop-blur rounded-full text-white text-sm font-bold border border-amber-300/50">Burkina Faso</span>
+            </div>
+            <p class="text-white/70 text-sm mt-3 italic">East Africa core + expanding West Africa partnerships</p>
+        </div>
+    </section>
 
-                            {/* Lead PIs */}
-                            <div className="mb-16">
-                                <h3 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-10" style={{fontFamily: "'Playfair Display', serif"}}>
-                                    Leadership Team
-                                </h3>
-                                <div className="grid md:grid-cols-3 gap-8">
-                                    <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-3xl p-8 border-4 border-emerald-200 shadow-xl hover:shadow-2xl transition-all hover:scale-105">
-                                        <div className="flex items-center gap-4 mb-6">
-                                            <div className="w-16 h-16 bg-emerald-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-                                                CW
-                                            </div>
-                                            <div>
-                                                <h4 className="text-xl md:text-2xl font-bold text-slate-800">Dr. Chernet Woju</h4>
-                                                <p className="text-base md:text-lg font-semibold text-emerald-700">Lead PI</p>
-                                            </div>
-                                        </div>
-                                        <p className="text-base text-slate-700 mb-3 font-semibold">ILRI-Beca-AABCF (Kenya)</p>
-                                        <p className="text-sm md:text-base text-slate-600 mb-3">Ethiopia & New Zealand</p>
-                                        <p className="text-sm md:text-base text-slate-700 leading-relaxed">In vitro fermentation, enteric methane measurement, anti-methanogenic feed additives, field animal trials</p>
-                                    </div>
+    <!-- ==================== 8 INNOVATIONS ==================== -->
+    <section id="innovations" class="py-20 md:py-28 bg-slate-50 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal text-center mb-16">
+                <div class="inline-flex items-center gap-2 px-5 py-2 bg-emerald-50 border border-emerald-200 rounded-full mb-6">
+                    <i data-lucide="lightbulb" class="w-4 h-4 text-emerald-600"></i>
+                    <span class="text-sm font-bold text-emerald-700 uppercase tracking-wider">Core Innovations</span>
+                </div>
+                <h2 class="font-display text-4xl md:text-6xl font-bold text-slate-800 mb-6">Eight Integrated Innovation Streams</h2>
+                <p class="text-lg md:text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
+                    A comprehensive, synergistic portfolio addressing methane mitigation, productivity, measurement, and sustainability simultaneously.
+                </p>
+            </div>
 
-                                    <div className="bg-gradient-to-br from-teal-50 to-blue-50 rounded-3xl p-8 border-4 border-teal-200 shadow-xl hover:shadow-2xl transition-all hover:scale-105">
-                                        <div className="flex items-center gap-4 mb-6">
-                                            <div className="w-16 h-16 bg-teal-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-                                                WA
-                                            </div>
-                                            <div>
-                                                <h4 className="text-xl md:text-2xl font-bold text-slate-800">Dr. Willis Adero</h4>
-                                                <p className="text-base md:text-lg font-semibold text-teal-700">Lead PI</p>
-                                            </div>
-                                        </div>
-                                        <p className="text-base text-slate-700 mb-3 font-semibold">ILRI-Beca-AABCF & KALRO</p>
-                                        <p className="text-sm md:text-base text-slate-600 mb-3">Kenya</p>
-                                        <p className="text-sm md:text-base text-slate-700 leading-relaxed">Probiotic development, KALPRO™ innovation, field animal trials</p>
-                                    </div>
-
-                                    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-8 border-4 border-blue-200 shadow-xl hover:shadow-2xl transition-all hover:scale-105">
-                                        <div className="flex items-center gap-4 mb-6">
-                                            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-                                                DK
-                                            </div>
-                                            <div>
-                                                <h4 className="text-xl md:text-2xl font-bold text-slate-800">Daniel Kapsandui</h4>
-                                                <p className="text-base md:text-lg font-semibold text-blue-700">Lead PI</p>
-                                            </div>
-                                        </div>
-                                        <p className="text-base text-slate-700 mb-3 font-semibold">ILRI-Beca-AABCF & PhD Candidate</p>
-                                        <p className="text-sm md:text-base text-slate-600 mb-3">Kenya</p>
-                                        <p className="text-sm md:text-base text-slate-700 leading-relaxed">Agronomic field trials, GHG emissions, carbon sequestration, soil fertility management</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Key Supervisors & Collaborators */}
-                            <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-3xl p-10 md:p-12 border-2 border-slate-200 shadow-xl">
-                                <h3 className="text-3xl md:text-4xl font-bold text-center text-slate-800 mb-10" style={{fontFamily: "'Playfair Display', serif"}}>
-                                    Expert Advisory & Implementation Team
-                                </h3>
-                                
-                                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                                    <div className="bg-white rounded-xl p-6 shadow-md">
-                                        <h4 className="font-bold text-lg text-slate-800 mb-2">Dr. Claudia Arndt</h4>
-                                        <p className="text-sm text-emerald-700 font-semibold mb-2">ILRI Mazingira Centre</p>
-                                        <p className="text-xs text-slate-600">Enteric Methane Measurement & Mitigation</p>
-                                    </div>
-                                    <div className="bg-white rounded-xl p-6 shadow-md">
-                                        <h4 className="font-bold text-lg text-slate-800 mb-2">Dr. Edward Garcia</h4>
-                                        <p className="text-sm text-teal-700 font-semibold mb-2">ILRI Mazingira Centre</p>
-                                        <p className="text-xs text-slate-600">On-station & on-farm GHG measurement</p>
-                                    </div>
-                                    <div className="bg-white rounded-xl p-6 shadow-md">
-                                        <h4 className="font-bold text-lg text-slate-800 mb-2">Dr. Setegn Worku</h4>
-                                        <p className="text-sm text-blue-700 font-semibold mb-2">ILRI-Kenya</p>
-                                        <p className="text-xs text-slate-600">Data Science, AI, Machine Learning</p>
-                                    </div>
-                                    <div className="bg-white rounded-xl p-6 shadow-md">
-                                        <h4 className="font-bold text-lg text-slate-800 mb-2">Dr. Nasser Yao</h4>
-                                        <p className="text-sm text-indigo-700 font-semibold mb-2">ILRI Beca-Kenya</p>
-                                        <p className="text-xs text-slate-600">Capacity Building & Exchange Programs</p>
-                                    </div>
-                                </div>
-
-                                <div className="border-t-2 border-slate-200 pt-8">
-                                    <h4 className="text-2xl font-bold text-center text-slate-800 mb-8" style={{fontFamily: "'Playfair Display', serif"}}>
-                                        Regional Expert Network (11+ Collaborators)
-                                    </h4>
-                                    <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                        {[
-                                            { name: "Dr. Chris Jones", role: "Low Methane Forages", country: "Kenya", institution: "ILRI" },
-                                            { name: "Dr. Ben Lukuyu", role: "Forages & Seaweeds", country: "Kenya", institution: "ILRI" },
-                                            { name: "Dr. Bayissa Hatew", role: "Animal Nutrition", country: "Ethiopia", institution: "ILRI" },
-                                            { name: "Dr. Ermias Habte", role: "Forage Specialist", country: "Ethiopia", institution: "ILRI" },
-                                            { name: "Gladys Mwaka Holeh", role: "Seaweed Taxonomy", country: "Kenya", institution: "KMFRI" },
-                                            { name: "Dr. Margareth Kyewalyanga", role: "Marine Sciences", country: "Tanzania", institution: "UDSM" },
-                                            { name: "Adey Melesse Yalew", role: "Rumen Microbiologist", country: "Ethiopia", institution: "EIAR" },
-                                            { name: "Dr. Kabuni Thomas", role: "Ruminant Nutrition", country: "Tanzania", institution: "TALIRI" },
-                                            { name: "Dr. Jimmy Semakula", role: "GHG Mitigation", country: "Uganda", institution: "NARO" },
-                                            { name: "Gilbert Mutoni", role: "Methane Specialist", country: "Rwanda", institution: "FAO" },
-                                            { name: "Dr. David Awolala", role: "Climate Policy", country: "Africa", institution: "AGNES" }
-                                        ].map((expert, index) => (
-                                            <div key={index} className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-all">
-                                                <h5 className="font-bold text-sm text-slate-800 mb-1">{expert.name}</h5>
-                                                <p className="text-xs text-slate-600 mb-2">{expert.role}</p>
-                                                <div className="flex flex-wrap gap-1">
-                                                    <span className="inline-block px-2 py-1 bg-emerald-100 text-emerald-700 rounded text-xs font-semibold">
-                                                        {expert.institution}
-                                                    </span>
-                                                    <span className="inline-block px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs">
-                                                        {expert.country}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="mt-10 text-center">
-                                    <p className="text-xl md:text-2xl text-slate-700 font-bold mb-4">
-                                        10+ Partner Institutions
-                                    </p>
-                                    <p className="text-base md:text-lg text-slate-600">
-                                        ILRI • KALRO • KMFRI • UDSM • EIAR • TALIRI • NARO • FAO-Rwanda • AGNES
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 reveal">
+                <!-- 1: KALPRO -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 glow-card group">
+                    <div class="icon-container bg-emerald-100 mb-4 group-hover:bg-emerald-200 transition-colors">
+                        <i data-lucide="flask-conical" class="w-7 h-7 text-emerald-600"></i>
                     </div>
-
-                    {/* Implementation Timeline */}
-                    <div className="bg-gradient-to-br from-slate-800 to-slate-900 py-20 md:py-24">
-                        <div className="max-w-7xl mx-auto px-6">
-                            <div className="text-center mb-16 md:mb-20">
-                                <h2 className="text-4xl md:text-6xl font-bold text-white mb-6" style={{fontFamily: "'Playfair Display', serif"}}>
-                                    3-Year Implementation Roadmap
-                                </h2>
-                                <p className="text-lg md:text-2xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
-                                    Clear milestones and deliverables ensure accountability and measurable progress
-                                </p>
-                            </div>
-
-                            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-                                {milestones.map((milestone, index) => (
-                                    <div key={index} className="bg-slate-700/50 backdrop-blur rounded-3xl p-8 md:p-10 border-2 border-slate-600 hover:border-emerald-400 transition-all shadow-2xl hover:scale-105 duration-300">
-                                        <div className="text-4xl md:text-5xl font-bold text-emerald-400 mb-4 md:mb-6" style={{fontFamily: "'Playfair Display', serif"}}>
-                                            {milestone.year}
-                                        </div>
-                                        <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 md:mb-8">
-                                            {milestone.title}
-                                        </h3>
-                                        <div className="space-y-3 md:space-y-4">
-                                            {milestone.achievements.map((achievement, idx) => (
-                                                <div key={idx} className="flex items-start gap-3">
-                                                    <CheckCircle2 />
-                                                    <span className="text-base md:text-lg text-slate-300">{achievement}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Call to Action */}
-                    <div className="bg-gradient-to-br from-slate-900 via-emerald-900 to-teal-900 py-20 md:py-24 relative overflow-hidden">
-                        <div className="absolute inset-0 opacity-20">
-                            <div className="absolute top-20 right-20 w-64 md:w-96 h-64 md:h-96 bg-emerald-400 rounded-full blur-3xl animate-pulse"></div>
-                            <div className="absolute bottom-20 left-20 w-64 md:w-96 h-64 md:h-96 bg-blue-400 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-                        </div>
-
-                        <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
-                            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 md:mb-8 leading-tight" style={{fontFamily: "'Playfair Display', serif"}}>
-                                Partner With Us: Funding Proposal for Continental Impact
-                            </h2>
-                            <p className="text-2xl md:text-3xl text-white/90 mb-12 md:mb-16 leading-relaxed">
-                                Seeking strategic partners to deliver climate impact at continental scale
-                            </p>
-
-                            <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16">
-                                {[
-                                    { label: "Project Duration", value: "3 Years (2026-2028)" },
-                                    { label: "Geographic Scope", value: "5 East African Countries" },
-                                    { label: "Impact Potential", value: "150M+ Ruminants" }
-                                ].map((item, index) => (
-                                    <div key={index} className="bg-white/15 backdrop-blur-xl border-2 border-white/30 rounded-2xl p-6 md:p-8 hover:bg-white/20 transition-all shadow-2xl">
-                                        <div className="font-bold text-white text-xl md:text-2xl mb-2 md:mb-3">{item.label}</div>
-                                        <div className="text-white/90 text-base md:text-xl">{item.value}</div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <div className="bg-white/15 backdrop-blur-xl border-2 border-white/30 rounded-3xl p-8 md:p-12 shadow-2xl">
-                                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4" style={{fontFamily: "'Playfair Display', serif"}}>
-                                    Funding Proposal Inquiries
-                                </h3>
-                                <p className="text-lg md:text-xl text-emerald-300 mb-6 md:mb-8 font-semibold">
-                                    We are actively seeking funding partners to launch this transformative initiative
-                                </p>
-                                <div className="space-y-3 md:space-y-4 text-white mb-8 md:mb-10">
-                                    <p className="text-xl md:text-2xl font-semibold">International Livestock Research Institute (ILRI)</p>
-                                    <p className="text-xl md:text-2xl font-semibold">Kenya Agricultural and Livestock Research Organization (KALRO)</p>
-                                    <p className="text-lg md:text-xl mt-6 md:mt-8 text-white/90">In collaboration with KMFRI, UDSM, EIAR, TALIRI, NARO, FAO-Rwanda, and AGNES</p>
-                                </div>
-                                
-                                <div className="inline-flex items-center gap-3 px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-900 rounded-full text-lg md:text-xl font-bold shadow-2xl hover:scale-105 transition-all cursor-pointer">
-                                    <Briefcase />
-                                    <span>Seeking Strategic Funding Partners</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Footer */}
-                    <div className="bg-slate-950 py-8 md:py-12">
-                        <div className="max-w-7xl mx-auto px-6">
-                            <div className="text-center text-slate-400 text-sm md:text-lg mb-4 md:mb-6">
-                                <p className="font-bold text-white mb-3 md:mb-4 text-xl md:text-2xl">IMMeRSE Project 2026-2028</p>
-                                <p className="text-base md:text-xl mb-2 md:mb-3">International Livestock Research Institute (ILRI) • Kenya Agricultural and Livestock Research Organization (KALRO)</p>
-                                <p className="text-sm md:text-lg">KMFRI • UDSM • EIAR • TALIRI • NARO Uganda • FAO-Rwanda • AGNES</p>
-                            </div>
-                            <div className="text-center text-slate-500 text-xs md:text-base mt-6 md:mt-8">
-                                <p>Supporting the Global Enteric Methane Mitigation Roadmap • AfDB Climate Action Framework • MDG Targets</p>
-                            </div>
-                        </div>
+                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Flagship</span>
+                    <h3 class="text-lg font-bold text-slate-800 mt-1 mb-3">KALPRO&trade; Probiotic</h3>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">Natural probiotic from unique Kenyan microbial ecosystems. 33% CH&#8324; reduction proven in field trials with simultaneous productivity gains.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-md text-xs font-semibold">33% CH&#8324; ↓</span>
+                        <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-md text-xs font-semibold">Milk yield ↑</span>
+                        <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-md text-xs font-semibold">Field-tested</span>
                     </div>
                 </div>
-            );
-        }
 
-        // Render the app
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<IMMeRSEDonorPage />);
+                <!-- 2: Seaweed -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 glow-card group">
+                    <div class="icon-container bg-teal-100 mb-4 group-hover:bg-teal-200 transition-colors">
+                        <i data-lucide="waves" class="w-7 h-7 text-teal-600"></i>
+                    </div>
+                    <span class="text-xs font-bold text-teal-600 uppercase tracking-wider">Nutrition</span>
+                    <h3 class="text-lg font-bold text-slate-800 mt-1 mb-3">Seaweed Portfolio</h3>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">African-sourced cultivated seaweed biomass enhancing protein, feed intake, and digestibility. Safe, affordable, scalable across systems.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 bg-teal-50 text-teal-700 rounded-md text-xs font-semibold">386+ species</span>
+                        <span class="px-2.5 py-1 bg-teal-50 text-teal-700 rounded-md text-xs font-semibold">Protein ↑</span>
+                        <span class="px-2.5 py-1 bg-teal-50 text-teal-700 rounded-md text-xs font-semibold">Low-cost</span>
+                    </div>
+                </div>
+
+                <!-- 3: Low-Methane Forages & TMRs -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 glow-card group">
+                    <div class="icon-container bg-green-100 mb-4 group-hover:bg-green-200 transition-colors">
+                        <i data-lucide="sprout" class="w-7 h-7 text-green-600"></i>
+                    </div>
+                    <span class="text-xs font-bold text-green-600 uppercase tracking-wider">Forages</span>
+                    <h3 class="text-lg font-bold text-slate-800 mt-1 mb-3">Low-Methane TMRs</h3>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">Tannin- and saponin-rich legumes with locally optimized rations that improve digestibility while lowering methane intensity.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 bg-green-50 text-green-700 rounded-md text-xs font-semibold">Indigenous</span>
+                        <span class="px-2.5 py-1 bg-green-50 text-green-700 rounded-md text-xs font-semibold">Adoptable</span>
+                        <span class="px-2.5 py-1 bg-green-50 text-green-700 rounded-md text-xs font-semibold">Cost-effective</span>
+                    </div>
+                </div>
+
+                <!-- 4: Measurement Tools -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 glow-card group">
+                    <div class="icon-container bg-blue-100 mb-4 group-hover:bg-blue-200 transition-colors">
+                        <i data-lucide="microscope" class="w-7 h-7 text-blue-600"></i>
+                    </div>
+                    <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Diagnostics</span>
+                    <h3 class="text-lg font-bold text-slate-800 mt-1 mb-3">Affordable Methane Tools</h3>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">Rapid colorimetric formate assays and IoT-based sensors for field-ready methane monitoring at a fraction of current costs.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-xs font-semibold">Formate assay</span>
+                        <span class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-xs font-semibold">IoT sensors</span>
+                        <span class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-md text-xs font-semibold">Field-ready</span>
+                    </div>
+                </div>
+
+                <!-- 5: Drone MRV -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 glow-card group">
+                    <div class="icon-container bg-indigo-100 mb-4 group-hover:bg-indigo-200 transition-colors">
+                        <i data-lucide="radio-tower" class="w-7 h-7 text-indigo-600"></i>
+                    </div>
+                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">MRV</span>
+                    <h3 class="text-lg font-bold text-slate-800 mt-1 mb-3">Drone Methane Monitoring</h3>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">Unmanned aerial systems with advanced methane sensors for rapid, non-invasive field-scale emissions validation — carbon market ready.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 bg-indigo-50 text-indigo-700 rounded-md text-xs font-semibold">Herd-scale</span>
+                        <span class="px-2.5 py-1 bg-indigo-50 text-indigo-700 rounded-md text-xs font-semibold">Non-invasive</span>
+                        <span class="px-2.5 py-1 bg-indigo-50 text-indigo-700 rounded-md text-xs font-semibold">MRV-ready</span>
+                    </div>
+                </div>
+
+                <!-- 6: P4 Gold -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 glow-card group">
+                    <div class="icon-container bg-pink-100 mb-4 group-hover:bg-pink-200 transition-colors">
+                        <i data-lucide="heart" class="w-7 h-7 text-pink-600"></i>
+                    </div>
+                    <span class="text-xs font-bold text-pink-600 uppercase tracking-wider">Fertility</span>
+                    <h3 class="text-lg font-bold text-slate-800 mt-1 mb-3">P4 Gold Testing Kit</h3>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">On-farm progesterone milk testing with 98% accuracy for precise heat detection, optimal AI timing, and improved calving intervals.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 bg-pink-50 text-pink-700 rounded-md text-xs font-semibold">98% accuracy</span>
+                        <span class="px-2.5 py-1 bg-pink-50 text-pink-700 rounded-md text-xs font-semibold">On-farm</span>
+                        <span class="px-2.5 py-1 bg-pink-50 text-pink-700 rounded-md text-xs font-semibold">Low-cost</span>
+                    </div>
+                </div>
+
+                <!-- 7: Circular Bio-Economy -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 glow-card group">
+                    <div class="icon-container bg-amber-100 mb-4 group-hover:bg-amber-200 transition-colors">
+                        <i data-lucide="recycle" class="w-7 h-7 text-amber-600"></i>
+                    </div>
+                    <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Circular</span>
+                    <h3 class="text-lg font-bold text-slate-800 mt-1 mb-3">Bio-Economy Pathway</h3>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">Manure-to-biofertilizer closes the nutrient loop. Replaces up to 80% of DAP, improves soil health, boosts household nutrition and income.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 bg-amber-50 text-amber-700 rounded-md text-xs font-semibold">80% DAP ↓</span>
+                        <span class="px-2.5 py-1 bg-amber-50 text-amber-700 rounded-md text-xs font-semibold">Soil carbon ↑</span>
+                        <span class="px-2.5 py-1 bg-amber-50 text-amber-700 rounded-md text-xs font-semibold">Nutrition ↑</span>
+                    </div>
+                </div>
+
+                <!-- 8: Low-Methane Lick Block -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 glow-card group">
+                    <div class="icon-container bg-orange-100 mb-4 group-hover:bg-orange-200 transition-colors">
+                        <i data-lucide="package" class="w-7 h-7 text-orange-600"></i>
+                    </div>
+                    <span class="text-xs font-bold text-orange-600 uppercase tracking-wider">Product</span>
+                    <h3 class="text-lg font-bold text-slate-800 mt-1 mb-3">Low-Methane Lick Block</h3>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">Urea-molasses-KalPro&trade;-seaweed block enhancing crop residue digestibility. Farmer-ready, manufacturable, carbon-credit eligible.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 bg-orange-50 text-orange-700 rounded-md text-xs font-semibold">Scalable</span>
+                        <span class="px-2.5 py-1 bg-orange-50 text-orange-700 rounded-md text-xs font-semibold">MRV-ready</span>
+                        <span class="px-2.5 py-1 bg-orange-50 text-orange-700 rounded-md text-xs font-semibold">Enterprise</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KalPro Gen-II callout -->
+            <div class="reveal mt-12 bg-gradient-to-r from-emerald-700 to-teal-700 rounded-3xl p-8 md:p-10 text-white relative overflow-hidden">
+                <div class="particle bg-white w-48 h-48" style="top:-20%;right:5%;opacity:0.05;animation-delay:2s;"></div>
+                <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6">
+                    <div class="icon-container bg-white/20 backdrop-blur">
+                        <i data-lucide="dna" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold mb-2 font-display">KalPro&trade; Gen-II: Next-Generation Methane-Oxidizing Probiotic</h3>
+                        <p class="text-white/90 leading-relaxed">Incorporating methanotrophs from African rice paddies that actively oxidize methane via MMO enzymes. Co-formulated with existing KalPro&trade; consortium and nutritional seaweed supplements for synergistic effects — reducing emissions while improving drought resilience and rumen health.</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <span class="px-4 py-2 bg-white/20 rounded-full text-sm font-bold border border-white/30">In Development</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI/ML Platform callout -->
+            <div class="reveal mt-5 bg-gradient-to-r from-slate-800 to-slate-700 rounded-3xl p-8 md:p-10 text-white relative overflow-hidden">
+                <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6">
+                    <div class="icon-container bg-violet-500/30 backdrop-blur">
+                        <i data-lucide="brain-circuit" class="w-8 h-8 text-violet-300"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold mb-2 font-display">AI/ML Predictive Analytics Platform</h3>
+                        <p class="text-white/90 leading-relaxed">Machine learning models integrating biological, nutritional, and emissions datasets to guide optimization, scaling strategies, and policy decisions. Digital catalog of African forages and seaweeds with methane mitigation efficacy. MRV-ready outputs and decision-support tools built in.</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <span class="px-4 py-2 bg-violet-500/30 rounded-full text-sm font-bold border border-violet-400/30">Cross-cutting</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== KALPRO PROVEN RESULTS ==================== -->
+    <section class="py-20 md:py-28 bg-gradient-to-br from-emerald-700 via-teal-700 to-cyan-800 relative overflow-hidden">
+        <div class="particle bg-white w-80 h-80" style="top:10%;right:-5%;opacity:0.06;"></div>
+        <div class="particle bg-emerald-200 w-60 h-60" style="bottom:5%;left:5%;opacity:0.08;animation-delay:3s;"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="reveal text-center mb-14">
+                <div class="inline-flex items-center gap-2 px-5 py-2 bg-white/15 backdrop-blur rounded-full mb-6 border border-white/20">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
+                    <span class="text-sm font-bold text-emerald-200 uppercase tracking-wider">De-Risked Investment</span>
+                </div>
+                <h2 class="font-display text-4xl md:text-6xl font-bold text-white mb-4">KALPRO&trade;: Already Proven in the Field</h2>
+                <p class="text-lg md:text-xl text-white/80 max-w-3xl mx-auto">4 years of field trials (2021&ndash;2024) demonstrate consistent, statistically significant performance.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12 reveal">
+                <div class="bg-white/12 backdrop-blur-xl border border-white/20 rounded-2xl p-6 text-center">
+                    <div class="impact-num text-4xl md:text-6xl text-white mb-2">33%</div>
+                    <div class="text-base font-semibold text-white mb-1">Methane Reduction</div>
+                    <div class="text-sm text-white/70">(P&lt;0.05 vs control)</div>
+                </div>
+                <div class="bg-white/12 backdrop-blur-xl border border-white/20 rounded-2xl p-6 text-center">
+                    <div class="impact-num text-4xl md:text-6xl text-white mb-2">15.7%</div>
+                    <div class="text-base font-semibold text-white mb-1">Gas Production ↑</div>
+                    <div class="text-sm text-white/70">vs control</div>
+                </div>
+                <div class="bg-white/12 backdrop-blur-xl border border-white/20 rounded-2xl p-6 text-center">
+                    <div class="impact-num text-4xl md:text-6xl text-white mb-2">23.3%</div>
+                    <div class="text-base font-semibold text-white mb-1">Better Than Commercial</div>
+                    <div class="text-sm text-white/70">probiotics</div>
+                </div>
+                <div class="bg-white/12 backdrop-blur-xl border border-white/20 rounded-2xl p-6 text-center">
+                    <div class="impact-num text-4xl md:text-6xl text-white mb-2">18</div>
+                    <div class="text-base font-semibold text-white mb-1">Animal Field Trial</div>
+                    <div class="text-sm text-white/70">validated results</div>
+                </div>
+            </div>
+
+            <div class="reveal bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 md:p-10">
+                <div class="flex items-start gap-4">
+                    <i data-lucide="building-2" class="w-8 h-8 text-emerald-300 flex-shrink-0 mt-1"></i>
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-3 font-display">Independent Revalidation at ILRI Mazingira Centre</h3>
+                        <p class="text-white/85 leading-relaxed text-lg">All KALPRO&trade; results will be independently verified through rigorous in vitro and in vivo trials at ILRI&rsquo;s world-class Mazingira Centre — the gold standard for livestock emissions research in Africa. Multi-tiered validation using respiration chambers, SF6, and GreenFeed systems across on-station and multi-country on-farm trials.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MULTI-TIERED METHODOLOGY ==================== -->
+    <section class="py-20 md:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal text-center mb-16">
+                <div class="inline-flex items-center gap-2 px-5 py-2 bg-blue-50 border border-blue-200 rounded-full mb-6">
+                    <i data-lucide="layers" class="w-4 h-4 text-blue-600"></i>
+                    <span class="text-sm font-bold text-blue-700 uppercase tracking-wider">Methodology</span>
+                </div>
+                <h2 class="font-display text-4xl md:text-6xl font-bold text-slate-800 mb-6">Multi-Tiered R&D Pipeline</h2>
+                <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                    From laboratory screening through controlled trials to continent-wide on-farm validation — a rigorous, phased approach ensuring only proven solutions reach farmers.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-4 reveal">
+                <div class="relative bg-gradient-to-b from-blue-50 to-blue-100 rounded-2xl p-6 border-2 border-blue-200 text-center">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">1</div>
+                    <div class="mt-4 mb-3"><i data-lucide="test-tubes" class="w-10 h-10 text-blue-600 mx-auto"></i></div>
+                    <h3 class="font-bold text-slate-800 mb-2">In Vitro Screening</h3>
+                    <p class="text-sm text-slate-600">Batch fermentation &amp; 12-day bioreactors. Dose-response for CH&#8324;, VFAs, digestibility.</p>
+                </div>
+                <div class="relative bg-gradient-to-b from-teal-50 to-teal-100 rounded-2xl p-6 border-2 border-teal-200 text-center">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-teal-600 text-white rounded-full flex items-center justify-center font-bold text-sm">2</div>
+                    <div class="mt-4 mb-3"><i data-lucide="beaker" class="w-10 h-10 text-teal-600 mx-auto"></i></div>
+                    <h3 class="font-bold text-slate-800 mb-2">On-Station Trials</h3>
+                    <p class="text-sm text-slate-600">36+ dairy cows/site. Respiration chambers, SF6, GreenFeed at ILRI &amp; KALRO.</p>
+                </div>
+                <div class="relative bg-gradient-to-b from-emerald-50 to-emerald-100 rounded-2xl p-6 border-2 border-emerald-200 text-center">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center font-bold text-sm">3</div>
+                    <div class="mt-4 mb-3"><i data-lucide="tractor" class="w-10 h-10 text-emerald-600 mx-auto"></i></div>
+                    <h3 class="font-bold text-slate-800 mb-2">Multi-Country On-Farm</h3>
+                    <p class="text-sm text-slate-600">40&ndash;60 cows/country under farmer-managed conditions across 7+ nations.</p>
+                </div>
+                <div class="relative bg-gradient-to-b from-purple-50 to-purple-100 rounded-2xl p-6 border-2 border-purple-200 text-center">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-sm">4</div>
+                    <div class="mt-4 mb-3"><i data-lucide="globe" class="w-10 h-10 text-purple-600 mx-auto"></i></div>
+                    <h3 class="font-bold text-slate-800 mb-2">Scale &amp; Policy</h3>
+                    <p class="text-sm text-slate-600">MRV frameworks, carbon protocols, NDC support, and continental scaling roadmaps.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== EXPECTED IMPACT ==================== -->
+    <section id="impact" class="py-20 md:py-28 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal text-center mb-16">
+                <div class="inline-flex items-center gap-2 px-5 py-2 bg-emerald-50 border border-emerald-200 rounded-full mb-6">
+                    <i data-lucide="target" class="w-4 h-4 text-emerald-600"></i>
+                    <span class="text-sm font-bold text-emerald-700 uppercase tracking-wider">Expected Impact</span>
+                </div>
+                <h2 class="font-display text-4xl md:text-6xl font-bold text-slate-800 mb-6">Impact Across Every Dimension</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
+                <div class="bg-white rounded-2xl p-7 border border-slate-200 glow-card">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="icon-container bg-emerald-100"><i data-lucide="microscope" class="w-6 h-6 text-emerald-600"></i></div>
+                        <h3 class="text-xl font-bold text-slate-800">For Science</h3>
+                    </div>
+                    <ul class="space-y-2.5 text-sm text-slate-600">
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>First comprehensive African seaweed efficacy map for enteric methane</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>Formate as a rapid methane biomarker — scalable screening</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>Mechanistic datasets linking microbiome, metabolites &amp; methane</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-2xl p-7 border border-slate-200 glow-card">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="icon-container bg-amber-100"><i data-lucide="users" class="w-6 h-6 text-amber-600"></i></div>
+                        <h3 class="text-xl font-bold text-slate-800">For Farmers</h3>
+                    </div>
+                    <ul class="space-y-2.5 text-sm text-slate-600">
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>Practical, low-cost strategies for feed efficiency &amp; milk productivity</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>Access to carbon finance &amp; climate-smart programs</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>Reduced fertilizer costs &amp; improved household nutrition</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-2xl p-7 border border-slate-200 glow-card">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="icon-container bg-blue-100"><i data-lucide="landmark" class="w-6 h-6 text-blue-600"></i></div>
+                        <h3 class="text-xl font-bold text-slate-800">For Policy</h3>
+                    </div>
+                    <ul class="space-y-2.5 text-sm text-slate-600">
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>Evidence to strengthen SLCP targets in Africa</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>Decision-support tools: abatement cost curves &amp; adoption roadmaps</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>MRV-ready data for NDCs &amp; carbon market participation</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-2xl p-7 border border-slate-200 glow-card">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="icon-container bg-cyan-100"><i data-lucide="cloud-sun" class="w-6 h-6 text-cyan-600"></i></div>
+                        <h3 class="text-xl font-bold text-slate-800">For Climate</h3>
+                    </div>
+                    <ul class="space-y-2.5 text-sm text-slate-600">
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>Reduces enteric &amp; manure CH&#8324;/N&#8322;O emissions</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>Reduces upstream synthetic fertilizer emissions</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>Enhances soil carbon sequestration</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-2xl p-7 border border-slate-200 glow-card">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="icon-container bg-violet-100"><i data-lucide="globe-2" class="w-6 h-6 text-violet-600"></i></div>
+                        <h3 class="text-xl font-bold text-slate-800">For Global Community</h3>
+                    </div>
+                    <ul class="space-y-2.5 text-sm text-slate-600">
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>Scalable model for livestock methane mitigation in LMICs</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>Contribution to SLCP reduction &amp; food security</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>Blueprint replicable across developing regions</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-2xl p-7 border border-slate-200 glow-card">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="icon-container bg-rose-100"><i data-lucide="heart-handshake" class="w-6 h-6 text-rose-600"></i></div>
+                        <h3 class="text-xl font-bold text-slate-800">For Sustainability</h3>
+                    </div>
+                    <ul class="space-y-2.5 text-sm text-slate-600">
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>Direct contribution to SDGs 1, 2, 3, 13 &amp; 15</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>Gender-responsive, ≥40&ndash;50% women &amp; youth participation</li>
+                        <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"></i>Integrated circular climate-smart livestock system</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SDG ALIGNMENT ==================== -->
+    <section class="py-16 md:py-20 bg-white">
+        <div class="max-w-5xl mx-auto px-6 reveal">
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-slate-800 text-center mb-10">SDG Alignment</h2>
+            <div class="flex flex-wrap justify-center gap-4 md:gap-6">
+                <div class="sdg-badge w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-gradient-to-br from-red-500 to-red-600 flex flex-col items-center justify-center text-white shadow-lg cursor-default">
+                    <span class="text-3xl md:text-4xl font-black">1</span>
+                    <span class="text-[10px] md:text-xs font-bold mt-1 text-center leading-tight">No Poverty</span>
+                </div>
+                <div class="sdg-badge w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 flex flex-col items-center justify-center text-white shadow-lg cursor-default">
+                    <span class="text-3xl md:text-4xl font-black">2</span>
+                    <span class="text-[10px] md:text-xs font-bold mt-1 text-center leading-tight">Zero Hunger</span>
+                </div>
+                <div class="sdg-badge w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-gradient-to-br from-green-500 to-green-600 flex flex-col items-center justify-center text-white shadow-lg cursor-default">
+                    <span class="text-3xl md:text-4xl font-black">3</span>
+                    <span class="text-[10px] md:text-xs font-bold mt-1 text-center leading-tight px-1">Good Health</span>
+                </div>
+                <div class="sdg-badge w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-700 flex flex-col items-center justify-center text-white shadow-lg cursor-default">
+                    <span class="text-3xl md:text-4xl font-black">13</span>
+                    <span class="text-[10px] md:text-xs font-bold mt-1 text-center leading-tight px-1">Climate Action</span>
+                </div>
+                <div class="sdg-badge w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-gradient-to-br from-lime-500 to-lime-600 flex flex-col items-center justify-center text-white shadow-lg cursor-default">
+                    <span class="text-3xl md:text-4xl font-black">15</span>
+                    <span class="text-[10px] md:text-xs font-bold mt-1 text-center leading-tight px-1">Life on Land</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== WHY FUND ==================== -->
+    <section class="py-20 md:py-28 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal text-center mb-16">
+                <div class="inline-flex items-center gap-2 px-5 py-2 bg-indigo-50 border border-indigo-200 rounded-full mb-6">
+                    <i data-lucide="briefcase" class="w-4 h-4 text-indigo-600"></i>
+                    <span class="text-sm font-bold text-indigo-700 uppercase tracking-wider">Investment Value</span>
+                </div>
+                <h2 class="font-display text-4xl md:text-6xl font-bold text-slate-800 mb-6">Why Fund IMMRSE-AFRICA?</h2>
+                <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">Four compelling reasons this is a high-impact, low-risk investment in continental climate action.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 reveal">
+                <div class="bg-white rounded-3xl p-8 border-2 border-emerald-200 glow-card">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
+                            <i data-lucide="shield-check" class="w-5 h-5 text-emerald-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-800 font-display">Proven Results</h3>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed mb-5">33% methane reduction and productivity gains already demonstrated in 4 years of field trials (2021&ndash;2024). Not starting from zero — this is a de-risked, validated technology.</p>
+                    <span class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-full text-sm font-bold"><i data-lucide="star" class="w-4 h-4"></i>Lower risk, faster deployment</span>
+                </div>
+
+                <div class="bg-white rounded-3xl p-8 border-2 border-blue-200 glow-card">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+                            <i data-lucide="bar-chart-3" class="w-5 h-5 text-blue-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-800 font-display">Carbon Market Ready</h3>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed mb-5">Multi-tiered MRV architecture — from biochemical assays to drone sensing — built into the methodology from day one. Direct pathway to verified emission reductions and climate finance.</p>
+                    <span class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-bold"><i data-lucide="star" class="w-4 h-4"></i>Direct pathway to climate finance</span>
+                </div>
+
+                <div class="bg-white rounded-3xl p-8 border-2 border-purple-200 glow-card">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
+                            <i data-lucide="map" class="w-5 h-5 text-purple-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-800 font-display">Continental Scale</h3>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed mb-5">Multi-country platform spanning East and West Africa creates a continental blueprint. From 5 countries to 7+ — and designed for replication across all of Africa.</p>
+                    <span class="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-full text-sm font-bold"><i data-lucide="star" class="w-4 h-4"></i>Exponential impact potential</span>
+                </div>
+
+                <div class="bg-white rounded-3xl p-8 border-2 border-amber-200 glow-card">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
+                            <i data-lucide="trophy" class="w-5 h-5 text-amber-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-800 font-display">World-Class Team</h3>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed mb-5">ILRI, KALRO, KMFRI, UDSM, EIAR, TALIRI, NARO, FAO, AGNES, and ARCN Nigeria. Unprecedented institutional collaboration with proven execution capacity.</p>
+                    <span class="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-full text-sm font-bold"><i data-lucide="star" class="w-4 h-4"></i>Execution certainty</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TEAM ==================== -->
+    <section id="team" class="py-20 md:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal text-center mb-16">
+                <div class="inline-flex items-center gap-2 px-5 py-2 bg-blue-50 border border-blue-200 rounded-full mb-6">
+                    <i data-lucide="users" class="w-4 h-4 text-blue-600"></i>
+                    <span class="text-sm font-bold text-blue-700 uppercase tracking-wider">Execution Team</span>
+                </div>
+                <h2 class="font-display text-4xl md:text-6xl font-bold text-slate-800 mb-6">World-Class Multi-Institutional Team</h2>
+                <p class="text-lg md:text-xl text-slate-600 max-w-4xl mx-auto">Proven expertise across livestock science, marine biology, soil science, AI/ML, climate policy, and reproductive management.</p>
+            </div>
+
+            <!-- Lead PIs -->
+            <div class="reveal mb-14">
+                <h3 class="font-display text-2xl md:text-3xl font-bold text-center text-slate-800 mb-8">Lead Principal Investigators</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 border-2 border-emerald-200 glow-card">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-14 h-14 bg-emerald-600 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg">CW</div>
+                            <div>
+                                <h4 class="text-lg font-bold text-slate-800">Dr. Chernet Woju</h4>
+                                <p class="text-sm font-semibold text-emerald-700">Lead PI</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-slate-700 font-semibold mb-1">ILRI-Beca-AABCF (Kenya)</p>
+                        <p class="text-sm text-slate-600">In vitro fermentation, enteric methane measurement, anti-methanogenic feed additives, field animal trials</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-teal-50 to-blue-50 rounded-2xl p-6 border-2 border-teal-200 glow-card">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-14 h-14 bg-teal-600 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg">WA</div>
+                            <div>
+                                <h4 class="text-lg font-bold text-slate-800">Dr. Willis Adero</h4>
+                                <p class="text-sm font-semibold text-teal-700">Lead PI</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-slate-700 font-semibold mb-1">ILRI-Beca-AABCF &amp; KALRO</p>
+                        <p class="text-sm text-slate-600">Probiotic development, KALPRO&trade; innovation, field animal trials</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border-2 border-blue-200 glow-card">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg">DK</div>
+                            <div>
+                                <h4 class="text-lg font-bold text-slate-800">Daniel Kapsandui</h4>
+                                <p class="text-sm font-semibold text-blue-700">Lead PI</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-slate-700 font-semibold mb-1">ILRI-Beca-AABCF &amp; PhD Candidate</p>
+                        <p class="text-sm text-slate-600">Agronomic field trials, GHG emissions, carbon sequestration, soil fertility management</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Supervisors -->
+            <div class="reveal bg-gradient-to-br from-slate-50 to-blue-50 rounded-3xl p-8 md:p-10 border border-slate-200">
+                <h3 class="font-display text-2xl md:text-3xl font-bold text-center text-slate-800 mb-8">Expert Advisory &amp; Implementation Team</h3>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    <div class="bg-white rounded-xl p-5 shadow-sm">
+                        <h4 class="font-bold text-base text-slate-800 mb-1">Dr. Claudia Arndt</h4>
+                        <p class="text-xs text-emerald-700 font-semibold mb-1">ILRI Mazingira Centre</p>
+                        <p class="text-xs text-slate-500">Enteric Methane Measurement &amp; Mitigation</p>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm">
+                        <h4 class="font-bold text-base text-slate-800 mb-1">Dr. Vibeke Lind</h4>
+                        <p class="text-xs text-teal-700 font-semibold mb-1">Seaweed Expert</p>
+                        <p class="text-xs text-slate-500">Seaweed Strategy Refinement</p>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm">
+                        <h4 class="font-bold text-base text-slate-800 mb-1">Dr. Setegn Worku</h4>
+                        <p class="text-xs text-blue-700 font-semibold mb-1">ILRI-Kenya</p>
+                        <p class="text-xs text-slate-500">Data Science, AI, Machine Learning</p>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm">
+                        <h4 class="font-bold text-base text-slate-800 mb-1">Dr. Nasser Yao</h4>
+                        <p class="text-xs text-indigo-700 font-semibold mb-1">ILRI Beca-Kenya</p>
+                        <p class="text-xs text-slate-500">Capacity Building &amp; Exchange Programs</p>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-200 pt-8">
+                    <h4 class="font-display text-xl font-bold text-center text-slate-800 mb-6">Regional Expert Network</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                        <div class="bg-white rounded-lg p-3 shadow-sm"><h5 class="font-bold text-xs text-slate-800">Dr. Chris Jones</h5><p class="text-xs text-slate-500">Low Methane Forages</p><span class="text-xs px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded font-semibold">ILRI</span></div>
+                        <div class="bg-white rounded-lg p-3 shadow-sm"><h5 class="font-bold text-xs text-slate-800">Dr. Ben Lukuyu</h5><p class="text-xs text-slate-500">Forages &amp; Seaweeds</p><span class="text-xs px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded font-semibold">ILRI</span></div>
+                        <div class="bg-white rounded-lg p-3 shadow-sm"><h5 class="font-bold text-xs text-slate-800">Dr. Bayissa Hatew</h5><p class="text-xs text-slate-500">Animal Nutrition</p><span class="text-xs px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded font-semibold">ILRI Ethiopia</span></div>
+                        <div class="bg-white rounded-lg p-3 shadow-sm"><h5 class="font-bold text-xs text-slate-800">Dr. Edward Garcia</h5><p class="text-xs text-slate-500">On-farm GHG Measurement</p><span class="text-xs px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded font-semibold">ILRI Mazingira</span></div>
+                        <div class="bg-white rounded-lg p-3 shadow-sm"><h5 class="font-bold text-xs text-slate-800">Gladys Mwaka Holeh</h5><p class="text-xs text-slate-500">Seaweed Taxonomy</p><span class="text-xs px-2 py-0.5 bg-blue-50 text-blue-700 rounded font-semibold">KMFRI</span></div>
+                        <div class="bg-white rounded-lg p-3 shadow-sm"><h5 class="font-bold text-xs text-slate-800">Dr. M. Kyewalyanga</h5><p class="text-xs text-slate-500">Marine Sciences</p><span class="text-xs px-2 py-0.5 bg-blue-50 text-blue-700 rounded font-semibold">UDSM</span></div>
+                        <div class="bg-white rounded-lg p-3 shadow-sm"><h5 class="font-bold text-xs text-slate-800">Dr. Kabuni Thomas</h5><p class="text-xs text-slate-500">Ruminant Nutrition</p><span class="text-xs px-2 py-0.5 bg-purple-50 text-purple-700 rounded font-semibold">TALIRI</span></div>
+                        <div class="bg-white rounded-lg p-3 shadow-sm"><h5 class="font-bold text-xs text-slate-800">Dr. Jimmy Semakula</h5><p class="text-xs text-slate-500">GHG Mitigation</p><span class="text-xs px-2 py-0.5 bg-purple-50 text-purple-700 rounded font-semibold">NARO Uganda</span></div>
+                        <div class="bg-white rounded-lg p-3 shadow-sm"><h5 class="font-bold text-xs text-slate-800">Gilbert Mutoni</h5><p class="text-xs text-slate-500">Methane Specialist</p><span class="text-xs px-2 py-0.5 bg-cyan-50 text-cyan-700 rounded font-semibold">FAO Rwanda</span></div>
+                        <div class="bg-white rounded-lg p-3 shadow-sm"><h5 class="font-bold text-xs text-slate-800">Dr. David Awolala</h5><p class="text-xs text-slate-500">Climate Policy</p><span class="text-xs px-2 py-0.5 bg-amber-50 text-amber-700 rounded font-semibold">AGNES</span></div>
+                        <div class="bg-white rounded-lg p-3 shadow-sm"><h5 class="font-bold text-xs text-slate-800">Adey Melesse Yalew</h5><p class="text-xs text-slate-500">Rumen Microbiologist</p><span class="text-xs px-2 py-0.5 bg-rose-50 text-rose-700 rounded font-semibold">EIAR Ethiopia</span></div>
+                        <div class="bg-white rounded-lg p-3 shadow-sm"><h5 class="font-bold text-xs text-slate-800">Dr. Ermias Habte</h5><p class="text-xs text-slate-500">Forage Specialist</p><span class="text-xs px-2 py-0.5 bg-rose-50 text-rose-700 rounded font-semibold">ILRI Ethiopia</span></div>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <p class="text-lg text-slate-700 font-bold mb-2">10+ Partner Institutions</p>
+                    <p class="text-sm text-slate-500">ILRI &bull; KALRO &bull; KMFRI &bull; UDSM &bull; EIAR &bull; TALIRI &bull; NARO &bull; FAO-Rwanda &bull; AGNES &bull; ARCN Nigeria</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TIMELINE ==================== -->
+    <section id="timeline" class="py-20 md:py-28 bg-gradient-to-br from-slate-800 to-slate-900 relative overflow-hidden">
+        <div class="particle bg-emerald-400 w-72 h-72" style="top:5%;right:-5%;opacity:0.05;"></div>
+
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal text-center mb-16">
+                <h2 class="font-display text-4xl md:text-6xl font-bold text-white mb-6">3-Year Implementation Roadmap</h2>
+                <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto">Clear milestones and deliverables ensure accountability and measurable progress at every stage.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 reveal">
+                <!-- Year 1 -->
+                <div class="bg-slate-700/50 backdrop-blur rounded-3xl p-8 border border-slate-600 hover:border-emerald-400 transition-all duration-300 glow-card">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-14 h-14 bg-emerald-500/20 rounded-2xl flex items-center justify-center">
+                            <span class="font-display text-2xl font-bold text-emerald-400">Y1</span>
+                        </div>
+                        <div>
+                            <span class="text-emerald-400 font-bold text-sm uppercase tracking-wider">2026</span>
+                            <h3 class="text-xl font-bold text-white">Foundation &amp; Validation</h3>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">High-throughput in vitro screening pipeline</span></div>
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">Formate assay &amp; IoT sensor development</span></div>
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">KALPRO&trade; revalidation at ILRI Mazingira</span></div>
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">African seaweed portfolio screening</span></div>
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">Microbiome baseline &amp; lick block formulation</span></div>
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">PhD/MSc fellowships launched</span></div>
+                    </div>
+                </div>
+
+                <!-- Year 2 -->
+                <div class="bg-slate-700/50 backdrop-blur rounded-3xl p-8 border border-slate-600 hover:border-cyan-400 transition-all duration-300 glow-card">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-14 h-14 bg-cyan-500/20 rounded-2xl flex items-center justify-center">
+                            <span class="font-display text-2xl font-bold text-cyan-400">Y2</span>
+                        </div>
+                        <div>
+                            <span class="text-cyan-400 font-bold text-sm uppercase tracking-wider">2027</span>
+                            <h3 class="text-xl font-bold text-white">Scale &amp; Integration</h3>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">On-station controlled trials (36+ cows/site)</span></div>
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">AI/ML predictive model development</span></div>
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">Multi-farm validation begins across countries</span></div>
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">Drone methane monitoring deployment</span></div>
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">Manure-to-biofertilizer pilots &amp; P4 Gold rollout</span></div>
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">Regional capacity building workshops</span></div>
+                    </div>
+                </div>
+
+                <!-- Year 3 -->
+                <div class="bg-slate-700/50 backdrop-blur rounded-3xl p-8 border border-slate-600 hover:border-violet-400 transition-all duration-300 glow-card">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-14 h-14 bg-violet-500/20 rounded-2xl flex items-center justify-center">
+                            <span class="font-display text-2xl font-bold text-violet-400">Y3</span>
+                        </div>
+                        <div>
+                            <span class="text-violet-400 font-bold text-sm uppercase tracking-wider">2028</span>
+                            <h3 class="text-xl font-bold text-white">Impact &amp; Deployment</h3>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-violet-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">Full on-farm validation across 7+ countries</span></div>
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-violet-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">MRV framework finalization &amp; carbon protocols</span></div>
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-violet-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">Lick block commercial production with cooperatives</span></div>
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-violet-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">Policy briefs &amp; NDC contributions finalized</span></div>
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-violet-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">Socio-economic &amp; adoption scaling assessments</span></div>
+                        <div class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-violet-400 flex-shrink-0 mt-1"></i><span class="text-slate-300 text-sm">Continental expansion roadmap published</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== GENDER & INCLUSION ==================== -->
+    <section class="py-16 md:py-20 bg-gradient-to-r from-rose-50 to-pink-50">
+        <div class="max-w-5xl mx-auto px-6 reveal">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="flex-shrink-0">
+                    <div class="w-20 h-20 bg-rose-100 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="heart-handshake" class="w-10 h-10 text-rose-600"></i>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold text-slate-800 mb-4">Gender-Responsive &amp; Inclusive by Design</h2>
+                    <p class="text-slate-600 leading-relaxed mb-4">IMMRSE-AFRICA embeds gender, inclusion, and diversity at every level. Women and youth are central to feeding, manure management, milk handling, and household nutrition in African livestock systems.</p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-4 py-2 bg-rose-100 text-rose-700 rounded-full text-sm font-semibold">≥40&ndash;50% women &amp; youth participation</span>
+                        <span class="px-4 py-2 bg-rose-100 text-rose-700 rounded-full text-sm font-semibold">Low-labour technologies</span>
+                        <span class="px-4 py-2 bg-rose-100 text-rose-700 rounded-full text-sm font-semibold">Gender-disaggregated M&amp;E</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CALL TO ACTION ==================== -->
+    <section id="cta" class="hero-bg py-20 md:py-28 relative overflow-hidden">
+        <div class="particle bg-emerald-300 w-80 h-80" style="top:10%;right:5%;opacity:0.1;"></div>
+        <div class="particle bg-blue-300 w-64 h-64" style="bottom:10%;left:10%;opacity:0.1;animation-delay:2s;"></div>
+
+        <div class="max-w-6xl mx-auto px-6 text-center relative z-10 reveal">
+            <h2 class="font-display text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                Partner With Us for<br>Continental Climate Impact
+            </h2>
+            <p class="text-xl md:text-2xl text-white/85 mb-14 max-w-3xl mx-auto leading-relaxed">
+                Seeking strategic funding partners to deliver transformative, measurable climate action across Africa&rsquo;s livestock systems.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-5 mb-14">
+                <div class="bg-white/12 backdrop-blur-xl border border-white/20 rounded-2xl p-6">
+                    <div class="font-bold text-white text-xl mb-2">Project Duration</div>
+                    <div class="text-white/85 text-lg">3 Years (2026&ndash;2028)</div>
+                </div>
+                <div class="bg-white/12 backdrop-blur-xl border border-white/20 rounded-2xl p-6">
+                    <div class="font-bold text-white text-xl mb-2">Geographic Scope</div>
+                    <div class="text-white/85 text-lg">7+ African Countries</div>
+                </div>
+                <div class="bg-white/12 backdrop-blur-xl border border-white/20 rounded-2xl p-6">
+                    <div class="font-bold text-white text-xl mb-2">Target Impact</div>
+                    <div class="text-white/85 text-lg">150M+ Ruminants</div>
+                </div>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 md:p-12">
+                <h3 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">Funding Proposal Inquiries</h3>
+                <p class="text-lg text-emerald-300 mb-8 font-semibold">We are actively seeking funding partners to launch this transformative continental initiative.</p>
+
+                <div class="space-y-3 text-white mb-8">
+                    <p class="text-xl font-semibold">International Livestock Research Institute (ILRI)</p>
+                    <p class="text-xl font-semibold">Kenya Agricultural and Livestock Research Organization (KALRO)</p>
+                    <p class="text-base text-white/80 mt-4">In collaboration with KMFRI, UDSM, EIAR, TALIRI, NARO, FAO-Rwanda, AGNES &amp; ARCN Nigeria</p>
+                </div>
+
+                <div class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-900 rounded-full text-lg font-bold shadow-2xl hover:scale-105 transition-all cursor-pointer">
+                    <i data-lucide="briefcase" class="w-5 h-5"></i>
+                    <span>Seeking Strategic Funding Partners</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-slate-950 py-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center">
+                <p class="font-display text-xl font-bold text-white mb-3">IMMRSE-AFRICA &mdash; 2026&ndash;2028</p>
+                <p class="text-sm text-slate-400 mb-2">International Livestock Research Institute (ILRI) &bull; Kenya Agricultural and Livestock Research Organization (KALRO)</p>
+                <p class="text-xs text-slate-500 mb-6">KMFRI &bull; UDSM &bull; EIAR &bull; TALIRI &bull; NARO Uganda &bull; FAO-Rwanda &bull; AGNES &bull; ARCN Nigeria</p>
+                <div class="border-t border-slate-800 pt-6">
+                    <p class="text-xs text-slate-600">Supporting the Global Enteric Methane Mitigation Roadmap &bull; AfDB Climate Action Framework &bull; UN Sustainable Development Goals</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script>
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+
+        // Scroll reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        revealElements.forEach(el => observer.observe(el));
+
+        // Sticky nav show on scroll
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > 600) {
+                navbar.style.transform = 'translateY(0)';
+            } else {
+                navbar.style.transform = 'translateY(-100%)';
+            }
+            lastScroll = currentScroll;
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
     </script>
 </body>
 </html>
